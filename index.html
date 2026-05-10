@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Casino World - Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #1a1d23;
+            --header-dark: #0d0e12;
+            --gold: #ffcc00;
+            --card-bg: #2a2f3b;
+            --active-blue: #0084ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; }
+
+        /* Header Area */
+        header {
+            background-color: var(--header-dark);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--gold);
+        }
+        .logo { width: 120px; }
+        .support { color: var(--gold); font-size: 14px; text-align: center; }
+
+        /* Slider Banner */
+        .banner {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://img.freepik.com/free-vector/casino-glitter-banner-with-slot-machine-lucky-sevens_1017-31514.jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        /* Category Tabs */
+        .tabs {
+            display: flex;
+            background-color: var(--header-dark);
+            overflow-x: auto;
+            padding: 10px 0;
+            gap: 10px;
+        }
+        .tab-item {
+            min-width: 80px;
+            text-align: center;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+        .tab-item i { font-size: 24px; display: block; margin-bottom: 5px; }
+        .tab-item.active { color: var(--gold); }
+
+        /* Game Grid Area */
+        .game-container {
+            padding: 15px;
+            display: none; /* Initially hidden */
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        .game-container.active { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            text-align: center;
+            padding-bottom: 5px;
+            overflow: hidden;
+            border: 1px solid #3d4452;
+            position: relative;
+        }
+        .game-card img { width: 100%; height: auto; display: block; }
+        .game-name { font-size: 10px; padding: 5px 2px; text-transform: uppercase; color: #fff; }
+        
+        .top-label {
+            position: absolute; top: 0; right: 0;
+            background: linear-gradient(45deg, transparent 50%, var(--gold) 50%);
+            width: 25px; height: 25px;
+        }
+
+        /* Advisory Bar */
+        .advisory {
+            background: #2a2f3b;
+            padding: 5px 15px;
+            font-size: 11px;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Action Button */
+        .footer-action {
+            position: fixed; bottom: 0; width: 100%;
+            padding: 15px; background: rgba(13, 14, 18, 0.9);
+        }
+        .match-btn {
+            background: linear-gradient(135deg, #0084ff, #00c6ff);
+            color: white; border: none; width: 100%; padding: 15px;
+            border-radius: 10px; font-weight: bold; font-size: 16px;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://i.ibb.co/L6v38vM/mcw-logo.png" alt="MCW Logo" class="logo">
+        <div class="support"><i class="fa-solid fa-headset"></i><br>24-7 CS</div>
+    </header>
+
+    <div class="banner"></div>
+
+    <div class="advisory">
+        <i class="fa-solid fa-bullhorn"></i>
+        <marquee>MCW Advisory: Having problems accessing the MCW site? Visit our official link.</marquee>
+    </div>
+
+    <div class="tabs">
+        <div class="tab-item active" onclick="showTab('hot')">
+            <i class="fa-solid fa-fire" style="color: #ff4d4d;"></i> HOT
+        </div>
+        <div class="tab-item" onclick="showTab('casino')">
+            <i class="fa-solid fa-spade" style="color: #00c6ff;"></i> CASINO
+        </div>
+        <div class="tab-item" onclick="showTab('slot')">
+            <i class="fa-solid fa-7" style="color: #ffcc00;"></i> SLOT
+        </div>
+    </div>
+
+    <div id="hot" class="game-container active">
+        <div class="game-card"><div class="top-label"></div><img src="p1.webp"><div class="game-name">Lucky Tam..</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p2.webp"><div class="game-name">Fortune Ga..</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p3.webp"><div class="game-name">NCVIP Gat..</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p4.webp"><div class="game-name">Super Ace</div></div>
+    </div>
+
+    <div id="casino" class="game-container">
+        <div class="game-card"><div class="top-label"></div><img src="p5.webp"><div class="game-name">Sexy</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p6.webp"><div class="game-name">EVO</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p7.webp"><div class="game-name">DreamGaming</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p8.webp"><div class="game-name">VIA</div></div>
+    </div>
+
+    <div id="slot" class="game-container">
+        <div class="game-card"><div class="top-label"></div><img src="p9.webp"><div class="game-name">JILI</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p10.webp"><div class="game-name">PG Slot</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p1.webp"><div class="game-name">Yellow Bat</div></div>
+        <div class="game-card"><div class="top-label"></div><img src="p2.webp"><div class="game-name">FastSpin</div></div>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <div class="footer-action">
+        <button class="match-btn" onclick="handleStartChat()">
+            <i class="fa-brands fa-facebook-messenger"></i> START PRIVATE CHAT
+        </button>
+    </div>
+
+    <script>
+        // আপনার অ্যাফিলিয়েট লিংক এবং ট্র্যাকিং
+        const TARGET_URL = 'messenger.jacklyn.site'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqyovnqqfG6g-bVTib8e5wDEUVAmeeKpXEr8stc11lKn7AgBjPGJk6KcKSWAkWYaoL/exec';
+
+        function sendEvent(type) {
+            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ event: type }) });
+        }
+
+        // ট্যাব সুইচিং ফাংশন
+        function showTab(tabId) {
+            // সব কন্টেইনার হাইড করা
+            document.querySelectorAll('.game-container').forEach(el => el.classList.remove('active'));
+            // সব ট্যাব ইনঅ্যাক্টিভ করা
+            document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+            
+            // সিলেক্টেড ট্যাব শো করা
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        window.onload = () => { sendEvent('Game_Page_Visit'); };
+
+        function handleStartChat() {
+            sendEvent('Game_Button_Click');
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const isFB = (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1);
+            const chromeIntent = `intent://${TARGET_URL}#Intent;scheme=https;package=com.android.chrome;end`;
+            
+            setTimeout(() => {
+                window.location.href = isFB ? chromeIntent : `https://${TARGET_URL}`;
+            }, 300);
+        }
+    </script>
+</body>
+</html>
