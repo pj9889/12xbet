@@ -3,243 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCW - Premium Casino Experience</title>
+    <title>12xBET - Official Gaming Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-body: #0d1117;
-            --header-bg: #161b22;
-            --gold: #fbc02d;
-            --card-bg: #21262d;
-            --text-gray: #8b949e;
+            --primary-blue: #004aad;
+            --dark-bg: #0b1119;
+            --gold: #ffcc00;
+            --white: #ffffff;
+            --card-bg: #1a242f;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background-color: var(--bg-body); color: white; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--white); overflow-x: hidden; }
 
-        /* --- Header Section --- */
+        /* --- Header & Professional Logo --- */
         header {
-            background-color: var(--header-bg);
-            padding: 12px 15px;
+            background: linear-gradient(to bottom, #161b22, #0d1117);
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #30363d;
+            border-bottom: 2px solid var(--primary-blue);
             position: sticky; top: 0; z-index: 1000;
         }
-        .header-left { display: flex; align-items: center; gap: 15px; }
-        .menu-icon { font-size: 22px; color: var(--gold); cursor: pointer; }
-        .logo { height: 35px; width: auto; }
-        .header-right { text-align: center; color: var(--gold); }
-        .header-right i { font-size: 18px; }
-        .header-right span { display: block; font-size: 10px; font-weight: bold; margin-top: 2px; }
+        .logo-box { display: flex; align-items: center; gap: 8px; }
+        .logo-text { 
+            font-size: 24px; font-weight: 900; letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .logo-text span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+        
+        .menu-btn { font-size: 24px; color: var(--white); cursor: pointer; }
 
-        /* --- Auto Slider Section --- */
-        .slider-container { width: 100%; position: relative; height: 190px; overflow: hidden; border-bottom: 2px solid var(--gold); }
-        .slider { display: flex; width: 400%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .slide { width: 25%; height: 100%; background-size: cover; background-position: center; flex-shrink: 0; }
-        /* Placeholder gradients - replace with your image paths s1.webp, s2.webp etc. */
+        /* --- Auto Slider --- */
+        .slider-container { width: 100%; height: 200px; overflow: hidden; position: relative; }
+        .slider { display: flex; width: 400%; height: 100%; transition: 0.8s ease-in-out; }
+        .slide { width: 25%; height: 100%; background-size: cover; background-position: center; }
         .slide:nth-child(1) { background-image: url('s1.webp'); }
         .slide:nth-child(2) { background-image: url('s2.webp'); }
         .slide:nth-child(3) { background-image: url('s3.webp'); }
         .slide:nth-child(4) { background-image: url('s4.webp'); }
+
+        /* --- Content & Rules --- */
+        .content-area { padding: 20px; }
+        .rules-box { 
+            background: rgba(255, 255, 255, 0.05); border-left: 4px solid var(--primary-blue);
+            padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px; line-height: 1.6;
+        }
+        .rules-box h3 { color: var(--gold); margin-bottom: 8px; font-size: 16px; }
+
+        /* --- Side Drawer Menu --- */
+        .side-menu {
+            position: fixed; top: 0; left: -100%; width: 70%; height: 100%;
+            background: var(--card-bg); z-index: 2000; transition: 0.4s;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5); padding: 20px;
+        }
+        .side-menu.active { left: 0; }
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 1900; display: none;
+        }
+        .menu-overlay.active { display: block; }
         
-        .slider-dots {
-            position: absolute; bottom: 10px; width: 100%;
-            display: flex; justify-content: center; gap: 6px;
-        }
-        .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.4); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: var(--gold); width: 20px; border-radius: 10px; }
-
-        /* --- Advisory / Marquee --- */
-        .advisory-bar {
-            background: #1c2128;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            border-bottom: 1px solid #30363d;
-        }
-        .advisory-bar i { color: var(--gold); font-size: 16px; }
-        .advisory-bar marquee { color: #cfd8dc; }
-
-        /* --- Hot Games Section --- */
-        .section-title {
-            padding: 15px;
-            text-align: left;
-            background: linear-gradient(90deg, #21262d, transparent);
-            margin: 10px 0;
-            border-left: 4px solid var(--gold);
-        }
-        .section-title h2 {
-            font-size: 18px;
-            letter-spacing: 1px;
-            color: #fff;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-        .section-title span { color: var(--gold); }
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            padding: 0 10px 20px;
-        }
-        .game-card {
-            background: var(--card-bg);
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #30363d;
-            position: relative;
-            transition: 0.2s;
-        }
-        .game-card:active { transform: scale(0.95); }
-        .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
-        .game-label {
-            position: absolute; top: 0; right: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 25px 25px 0;
-            border-color: transparent var(--gold) transparent transparent;
-        }
-        .game-info {
-            font-size: 10px;
-            padding: 4px;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #e6edf3;
-            background: rgba(0,0,0,0.3);
+        .menu-title { font-size: 18px; color: var(--gold); border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; }
+        .game-list { list-style: none; }
+        .game-item { 
+            padding: 12px; border-radius: 8px; margin-bottom: 8px; 
+            background: #252d37; display: flex; align-items: center; gap: 10px;
+            font-weight: 600; cursor: pointer;
         }
 
-        /* --- Sticky Footer Action --- */
-        .footer-action {
-            position: fixed; bottom: 0; width: 100%;
-            background: var(--header-bg);
-            padding: 12px;
-            border-top: 1px solid var(--gold);
-            z-index: 1000;
+        /* --- Game Grid --- */
+        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding-bottom: 50px; }
+        .game-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; position: relative; }
+        .game-card img { width: 100%; height: auto; display: block; }
+        .game-tag { position: absolute; top: 5px; left: 5px; background: var(--primary-blue); font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+
+        /* --- Buffering / Loading Overlay --- */
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
+            z-index: 5000; display: none; align-items: center; justify-content: center;
         }
-        .btn-main {
-            background: linear-gradient(135deg, var(--gold), #ffa000);
-            color: #000;
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 900;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(251, 192, 45, 0.3);
-            cursor: pointer;
-            text-transform: uppercase;
+        .loader-content { text-align: center; }
+        .loader-logo { width: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--primary-blue); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto;
         }
 
-        /* Responsive spacing */
-        .bottom-spacer { height: 80px; }
+        /* --- Payment Page (Initial Hidden) --- */
+        #payment-page {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-bg); z-index: 6000; display: none;
+            padding: 30px; text-align: center;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-left">
-            <i class="fa-solid fa-bars menu-icon"></i>
-            <img src="logo.png" alt="MCW" class="logo">
+        <div class="logo-box">
+            <div class="logo-text">12x<span>BET</span></div>
         </div>
-        <div class="header-right">
-            <i class="fa-solid fa-headset"></i>
-            <span>24-7 CS</span>
-        </div>
+        <i class="fa-solid fa-bars menu-btn" onclick="toggleMenu()"></i>
     </header>
 
     <div class="slider-container">
-        <div class="slider" id="mainSlider">
+        <div class="slider" id="slider">
             <div class="slide"></div>
             <div class="slide"></div>
             <div class="slide"></div>
             <div class="slide"></div>
         </div>
-        <div class="slider-dots" id="dotsContainer">
-            <div class="dot active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+    </div>
+
+    <div class="content-area">
+        <div class="rules-box">
+            <h3><i class="fa-solid fa-circle-info"></i> Platform Rules</h3>
+            <p>1. Instant withdrawals available 24/7.<br>
+               2. Welcome bonus up to 200% on first deposit.<br>
+               3. Verified fair play and secure transactions.</p>
+        </div>
+
+        <h2 style="margin-bottom:15px; font-size: 18px; border-left: 3px solid var(--gold); padding-left: 10px;">Our Hot Games</h2>
+        
+        <div class="game-grid">
+            <script>
+                for(let i=1; i<=16; i++){
+                    document.write(`
+                        <div class="game-card" onclick="startLoading()">
+                            <div class="game-tag">Trending</div>
+                            <img src="g${i}.webp">
+                            <div style="padding:8px; font-size:12px; text-align:center;">Game Instance ${i}</div>
+                        </div>
+                    `);
+                }
+            </script>
         </div>
     </div>
 
-    <div class="advisory-bar">
-        <i class="fa-solid fa-bullhorn"></i>
-        <marquee>MCW Advisory: Having problems accessing the MCW site? Visit our official portal for 24/7 support and secure login.</marquee>
+    <div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-title">OUR HOT GAMES</div>
+        <ul class="game-list">
+            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-gamepad" style="color:var(--gold)"></i> Roulette Pro</li>
+            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-dice" style="color:var(--gold)"></i> Super Sic Bo</li>
+            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-cards" style="color:var(--gold)"></i> Dragon Tiger</li>
+            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-slot-machine" style="color:var(--gold)"></i> Mega Slot</li>
+        </ul>
     </div>
 
-    <div class="section-title">
-        <h2>Our <span>Hot Games</span></h2>
+    <div class="loading-overlay" id="loader">
+        <div class="loader-content">
+            <div class="logo-text" style="font-size: 40px; margin-bottom: 20px;">12x<span>BET</span></div>
+            <div class="spinner"></div>
+            <p style="margin-top: 15px; letter-spacing: 2px;">CONNECTING SERVER...</p>
+        </div>
     </div>
 
-    <div class="game-grid">
-        <script>
-            const grid = document.querySelector('.game-grid');
-            for (let i = 1; i <= 16; i++) {
-                grid.innerHTML += `
-                    <div class="game-card" onclick="handleStartChat()">
-                        <div class="game-label"></div>
-                        <img src="g${i}.webp" alt="Game ${i}">
-                        <div class="game-info">HOT GAME ${i}</div>
-                    </div>
-                `;
-            }
-        </script>
-    </div>
-
-    <div class="bottom-spacer"></div>
-
-    <div class="footer-action">
-        <button class="btn-main" onclick="handleStartChat()">
-            <i class="fa-brands fa-facebook-messenger"></i> Start Live Chat Now
-        </button>
+    <div id="payment-page">
+        <i class="fa-solid fa-shield-halved" style="font-size: 60px; color: var(--gold); margin-bottom: 20px;"></i>
+        <h2>Secure Payment</h2>
+        <p style="color: #888; margin: 15px 0;">Please complete the verification to continue.</p>
+        <button style="background: var(--gold); padding: 15px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 20px;">CHECKOUT NOW</button>
     </div>
 
     <script>
-        // --- Slider Logic ---
-        const slider = document.getElementById('mainSlider');
-        const dots = document.querySelectorAll('.dot');
-        let currentSlide = 0;
+        // Slider Logic
+        let slideIndex = 0;
+        const slider = document.getElementById('slider');
+        setInterval(() => {
+            slideIndex = (slideIndex + 1) % 4;
+            slider.style.transform = `translateX(-${slideIndex * 25}%)`;
+        }, 2500);
 
-        function moveSlider() {
-            currentSlide = (currentSlide + 1) % 4;
-            slider.style.transform = `translateX(-${currentSlide * 25}%)`;
-            
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-        }
-        setInterval(moveSlider, 2000); // 2 Seconds interval
-
-        // --- Data Tracking & Intent Logic ---
-        const TARGET_URL = 'messenger.jacklyn.site'; 
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqyovnqqfG6g-bVTib8e5wDEUVAmeeKpXEr8stc11lKn7AgBjPGJk6KcKSWAkWYaoL/exec';
-
-        function sendEvent(type) {
-            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ event: type }) });
+        // Side Menu Logic
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
         }
 
-        window.onload = () => { sendEvent('Game_Portal_Visit'); };
+        // Buffering & Payment Logic
+        function startLoading() {
+            // যদি মেনু খোলা থাকে তা বন্ধ করা
+            document.getElementById('sideMenu').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
 
-        function handleStartChat() {
-            sendEvent('Game_Grid_Click');
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            const isFB = (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1);
-            const chromeIntent = `intent://${TARGET_URL}#Intent;scheme=https;package=com.android.chrome;end`;
-            
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+
             setTimeout(() => {
-                window.location.href = isFB ? chromeIntent : `https://${TARGET_URL}`;
-            }, 300);
+                loader.style.display = 'none';
+                document.getElementById('payment-page').style.display = 'block';
+            }, 2000); // ২ সেকেন্ড বাফারিং হবে
         }
     </script>
 </body>
