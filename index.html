@@ -3,206 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12xBET - Official Gaming Portal</title>
+    <title>12xBET - Official Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
+            --bg-body: #0d1117;
+            --header-bg: #161b22;
+            --gold: #fbc02d;
             --primary-blue: #004aad;
-            --dark-bg: #0b1119;
-            --gold: #ffcc00;
-            --white: #ffffff;
-            --card-bg: #1a242f;
+            --card-bg: #21262d;
+            --3d-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--dark-bg); color: var(--white); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: var(--bg-body); color: white; overflow-x: hidden; }
 
-        /* --- Header & Professional Logo --- */
+        /* --- Header Section --- */
         header {
-            background: linear-gradient(to bottom, #161b22, #0d1117);
-            padding: 15px;
+            background-color: var(--header-bg);
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--primary-blue);
+            border-bottom: 2px solid var(--gold);
             position: sticky; top: 0; z-index: 1000;
         }
-        .logo-box { display: flex; align-items: center; gap: 8px; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .menu-icon { font-size: 22px; color: var(--gold); cursor: pointer; }
+        
+        /* Professional 12xBET Logo */
         .logo-text { 
-            font-size: 24px; font-weight: 900; letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff 30%, var(--primary-blue));
+            font-size: 22px; font-weight: 900; letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 40%, var(--gold));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .logo-text span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
-        
-        .menu-btn { font-size: 24px; color: var(--white); cursor: pointer; }
 
-        /* --- Auto Slider --- */
-        .slider-container { width: 100%; height: 200px; overflow: hidden; position: relative; }
-        .slider { display: flex; width: 400%; height: 100%; transition: 0.8s ease-in-out; }
-        .slide { width: 25%; height: 100%; background-size: cover; background-position: center; }
+        .header-right { text-align: center; color: var(--gold); cursor: pointer; }
+        .header-right i { font-size: 20px; }
+        .header-right span { display: block; font-size: 10px; font-weight: bold; }
+
+        /* --- Auto Slider Section --- */
+        .slider-container { width: 100%; position: relative; height: 190px; overflow: hidden; border-bottom: 2px solid var(--gold); }
+        .slider { display: flex; width: 400%; height: 100%; transition: transform 0.8s ease-in-out; }
+        .slide { width: 25%; height: 100%; background-size: cover; background-position: center; flex-shrink: 0; }
         .slide:nth-child(1) { background-image: url('s1.webp'); }
         .slide:nth-child(2) { background-image: url('s2.webp'); }
         .slide:nth-child(3) { background-image: url('s3.webp'); }
         .slide:nth-child(4) { background-image: url('s4.webp'); }
 
-        /* --- Content & Rules --- */
-        .content-area { padding: 20px; }
-        .rules-box { 
-            background: rgba(255, 255, 255, 0.05); border-left: 4px solid var(--primary-blue);
-            padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px; line-height: 1.6;
+        /* --- Advisory / Marquee --- */
+        .advisory-bar {
+            background: #1c2128; padding: 8px 12px; display: flex;
+            align-items: center; gap: 10px; font-size: 12px; border-bottom: 1px solid #30363d;
         }
-        .rules-box h3 { color: var(--gold); margin-bottom: 8px; font-size: 16px; }
+        .advisory-bar i { color: var(--gold); }
 
-        /* --- Side Drawer Menu --- */
+        /* --- Platform Rules --- */
+        .rules-section { padding: 15px; background: rgba(251, 192, 45, 0.05); margin: 10px; border-radius: 10px; border: 1px solid rgba(251, 192, 45, 0.2); }
+        .rules-section h3 { font-size: 14px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase; }
+        .rules-section p { font-size: 11px; color: #8b949e; line-height: 1.4; }
+
+        /* --- Hot Games Section --- */
+        .section-title { padding: 12px 15px; background: linear-gradient(90deg, #21262d, transparent); border-left: 4px solid var(--gold); margin: 10px 0; }
+        .section-title h2 { font-size: 17px; text-transform: uppercase; font-weight: 800; }
+        .section-title span { color: var(--gold); }
+
+        /* --- 3D Game Grid --- */
+        .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
+        .game-card {
+            background: var(--card-bg); border-radius: 8px; overflow: hidden;
+            border: 1px solid #30363d; position: relative;
+            box-shadow: var(--3d-shadow); transition: 0.3s;
+        }
+        .game-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+        .game-label { position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 20px 20px 0; border-color: transparent var(--gold) transparent transparent; }
+
+        /* --- Left Side Half-Drawer Menu --- */
         .side-menu {
-            position: fixed; top: 0; left: -100%; width: 70%; height: 100%;
-            background: var(--card-bg); z-index: 2000; transition: 0.4s;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5); padding: 20px;
+            position: fixed; top: 0; left: -100%; width: 50%; height: 100%;
+            background: #161b22; z-index: 2000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-right: 2px solid var(--gold); padding: 20px 0;
         }
         .side-menu.active { left: 0; }
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 1900; display: none;
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1900; display: none; }
         .menu-overlay.active { display: block; }
+        .drawer-header { padding: 0 15px 15px; border-bottom: 1px solid #30363d; color: var(--gold); font-weight: bold; font-size: 14px; }
         
-        .menu-title { font-size: 18px; color: var(--gold); border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; }
-        .game-list { list-style: none; }
-        .game-item { 
-            padding: 12px; border-radius: 8px; margin-bottom: 8px; 
-            background: #252d37; display: flex; align-items: center; gap: 10px;
-            font-weight: 600; cursor: pointer;
+        .side-game-item { 
+            padding: 15px; border-bottom: 1px solid #21262d; display: flex; 
+            align-items: center; gap: 10px; font-size: 12px; color: #fff; cursor: pointer;
         }
 
-        /* --- Game Grid --- */
-        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding-bottom: 50px; }
-        .game-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; position: relative; }
-        .game-card img { width: 100%; height: auto; display: block; }
-        .game-tag { position: absolute; top: 5px; left: 5px; background: var(--primary-blue); font-size: 10px; padding: 2px 6px; border-radius: 4px; }
-
-        /* --- Buffering / Loading Overlay --- */
-        .loading-overlay {
+        /* --- Buffering Overlay --- */
+        #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
             z-index: 5000; display: none; align-items: center; justify-content: center;
         }
-        .loader-content { text-align: center; }
-        .loader-logo { width: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
-        .spinner {
-            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1);
-            border-top: 5px solid var(--primary-blue); border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 0 auto;
-        }
-
-        /* --- Payment Page (Initial Hidden) --- */
-        #payment-page {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--dark-bg); z-index: 6000; display: none;
-            padding: 30px; text-align: center;
-        }
-
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-box">
+        <div class="header-left">
+            <i class="fa-solid fa-bars menu-icon" onclick="toggleMenu()"></i>
             <div class="logo-text">12x<span>BET</span></div>
         </div>
-        <i class="fa-solid fa-bars menu-btn" onclick="toggleMenu()"></i>
+        <div class="header-right">
+            <i class="fa-solid fa-headset"></i>
+            <span>24-7 CS</span>
+        </div>
     </header>
-
-    <div class="slider-container">
-        <div class="slider" id="slider">
-            <div class="slide"></div>
-            <div class="slide"></div>
-            <div class="slide"></div>
-            <div class="slide"></div>
-        </div>
-    </div>
-
-    <div class="content-area">
-        <div class="rules-box">
-            <h3><i class="fa-solid fa-circle-info"></i> Platform Rules</h3>
-            <p>1. Instant withdrawals available 24/7.<br>
-               2. Welcome bonus up to 200% on first deposit.<br>
-               3. Verified fair play and secure transactions.</p>
-        </div>
-
-        <h2 style="margin-bottom:15px; font-size: 18px; border-left: 3px solid var(--gold); padding-left: 10px;">Our Hot Games</h2>
-        
-        <div class="game-grid">
-            <script>
-                for(let i=1; i<=16; i++){
-                    document.write(`
-                        <div class="game-card" onclick="startLoading()">
-                            <div class="game-tag">Trending</div>
-                            <img src="g${i}.webp">
-                            <div style="padding:8px; font-size:12px; text-align:center;">Game Instance ${i}</div>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
-    </div>
 
     <div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="side-menu" id="sideMenu">
-        <div class="menu-title">OUR HOT GAMES</div>
-        <ul class="game-list">
-            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-gamepad" style="color:var(--gold)"></i> Roulette Pro</li>
-            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-dice" style="color:var(--gold)"></i> Super Sic Bo</li>
-            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-cards" style="color:var(--gold)"></i> Dragon Tiger</li>
-            <li class="game-item" onclick="startLoading()"><i class="fa-solid fa-slot-machine" style="color:var(--gold)"></i> Mega Slot</li>
-        </ul>
+        <div class="drawer-header">OUR HOT GAMES</div>
+        <div id="side-game-list"></div>
     </div>
 
-    <div class="loading-overlay" id="loader">
-        <div class="loader-content">
-            <div class="logo-text" style="font-size: 40px; margin-bottom: 20px;">12x<span>BET</span></div>
-            <div class="spinner"></div>
-            <p style="margin-top: 15px; letter-spacing: 2px;">CONNECTING SERVER...</p>
+    <div class="slider-container">
+        <div class="slider" id="mainSlider">
+            <div class="slide"></div><div class="slide"></div><div class="slide"></div><div class="slide"></div>
         </div>
     </div>
 
-    <div id="payment-page">
-        <i class="fa-solid fa-shield-halved" style="font-size: 60px; color: var(--gold); margin-bottom: 20px;"></i>
-        <h2>Secure Payment</h2>
-        <p style="color: #888; margin: 15px 0;">Please complete the verification to continue.</p>
-        <button style="background: var(--gold); padding: 15px 40px; border: none; border-radius: 50px; font-weight: bold; margin-top: 20px;">CHECKOUT NOW</button>
+    <div class="advisory-bar">
+        <i class="fa-solid fa-bullhorn"></i>
+        <marquee>12xBET Advisory: Enjoy the best gaming experience with 24/7 support. New bonus added for all members!</marquee>
+    </div>
+
+    <div class="rules-section">
+        <h3>Platform Rules</h3>
+        <p>• Minimum deposit required to unlock premium games.<br>• Instant withdrawal processing within 15 minutes.<br>• Verified SSL encryption for all transactions.</p>
+    </div>
+
+    <div class="section-title">
+        <h2>Our <span>Hot Games</span></h2>
+    </div>
+
+    <div class="game-grid" id="mainGrid"></div>
+
+    <div id="loader">
+        <div style="text-align: center;">
+            <div class="logo-text" style="font-size: 35px; margin-bottom: 20px;">12x<span>BET</span></div>
+            <div class="spinner"></div>
+            <p style="margin-top: 15px; font-size: 12px; letter-spacing: 1px;">LOADING SERVER...</p>
+        </div>
     </div>
 
     <script>
-        // Slider Logic
-        let slideIndex = 0;
-        const slider = document.getElementById('slider');
-        setInterval(() => {
-            slideIndex = (slideIndex + 1) % 4;
-            slider.style.transform = `translateX(-${slideIndex * 25}%)`;
-        }, 2500);
+        // --- Setup 16 Games ---
+        const mainGrid = document.getElementById('mainGrid');
+        const sideList = document.getElementById('side-game-list');
+        
+        for (let i = 1; i <= 16; i++) {
+            // Grid Games
+            mainGrid.innerHTML += `
+                <div class="game-card" onclick="openGame()">
+                    <div class="game-label"></div>
+                    <img src="g${i}.webp">
+                    <div style="font-size:9px; padding:5px; text-align:center; background:#161b22;">GAME ${i}</div>
+                </div>
+            `;
+            // Side Menu Games
+            if(i <= 8) { // শো করার জন্য প্রথম ৮টি নিলাম
+                sideList.innerHTML += `
+                    <div class="side-game-item" onclick="openGame()">
+                        <i class="fa-solid fa-gamepad" style="color:var(--gold)"></i>
+                        HOT GAME ${i}
+                    </div>
+                `;
+            }
+        }
 
-        // Side Menu Logic
+        // --- Slider Logic ---
+        const slider = document.getElementById('mainSlider');
+        let currentSlide = 0;
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 4;
+            slider.style.transform = `translateX(-${currentSlide * 25}%)`;
+        }, 2000);
+
+        // --- Menu Logic ---
         function toggleMenu() {
             document.getElementById('sideMenu').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        // Buffering & Payment Logic
-        function startLoading() {
-            // যদি মেনু খোলা থাকে তা বন্ধ করা
+        // --- Buffering & Redirect Logic ---
+        function openGame() {
+            // ক্লোজ মেনু যদি খোলা থাকে
             document.getElementById('sideMenu').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
-
+            
             const loader = document.getElementById('loader');
             loader.style.display = 'flex';
 
             setTimeout(() => {
                 loader.style.display = 'none';
-                document.getElementById('payment-page').style.display = 'block';
-            }, 2000); // ২ সেকেন্ড বাফারিং হবে
+                // পেমেন্ট পেজ বা অন্য গন্তব্য
+                window.location.href = "#payment"; // আপনার পেমেন্ট পেজের লিংক এখানে দিন
+                alert("Redirecting to Secure Payment Page...");
+            }, 2000);
         }
     </script>
 </body>
