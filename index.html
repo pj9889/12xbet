@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12xBET - Join Now</title>
+    <title>12xBET - Official</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -13,6 +13,7 @@
             --kathali: #e67e22;
             --electric-red: #ff1100;
             --card-bg: #1a1f26;
+            --green: #2ecc71;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
@@ -31,73 +32,73 @@
         .input-group { margin-bottom: 20px; text-align: left; }
         .input-group label { display: block; font-size: 13px; color: var(--gold); margin-bottom: 8px; }
         .input-group input { width: 100%; padding: 12px; background: #161b22; border: 1px solid #333; color: white; border-radius: 5px; outline: none; }
-        .submit-btn { background: linear-gradient(to right, #fbc02d, #e67e22); color: #000; border: none; padding: 15px; width: 100%; font-weight: 800; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
+        .submit-btn { background: linear-gradient(to right, #fbc02d, #e67e22); color: #000; border: none; padding: 12px; width: 100%; font-weight: 800; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
 
-        /* --- SIDE PROFILE MENU (নতুন আপডেট) --- */
-        #side-menu {
-            position: fixed; top: 0; left: -85%; width: 85%; height: 100%;
-            background: #161b22; z-index: 5000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-right: 2px solid var(--gold); overflow-y: auto; padding-bottom: 30px;
-        }
+        /* --- HEADER & WALLET --- */
+        #main-content { display: none; }
+        header { background-color: var(--header-bg); padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; height: 65px; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .wallet-container { background: #0d1117; border: 1px solid var(--gold); border-radius: 8px; padding: 4px 12px; text-align: center; cursor: pointer; min-width: 110px; transition: 0.3s; }
+        .wallet-container:active { transform: scale(0.95); opacity: 0.8; }
+        .wallet-label { font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: -2px; }
+        .wallet-amount { font-size: 15px; font-weight: 900; color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .wallet-amount i { font-size: 11px; }
+        .refreshing i { animation: spin 1s linear infinite; }
+
+        /* --- SIDE MENU --- */
+        #side-menu { position: fixed; top: 0; left: -85%; width: 85%; height: 100%; background: #161b22; z-index: 5000; transition: 0.4s; border-right: 2px solid var(--gold); overflow-y: auto; }
         #side-menu.active { left: 0; }
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 4000; display: none; backdrop-filter: blur(3px); }
         .menu-overlay.active { display: block; }
 
-        .profile-section { padding: 20px; text-align: center; background: #1c2128; border-bottom: 1px solid #333; }
-        .profile-pic-box { position: relative; width: 80px; height: 80px; margin: 0 auto 10px; }
-        #profile-img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
-        .cam-icon { position: absolute; bottom: 0; right: 0; background: var(--gold); color: #000; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .profile-card { background: linear-gradient(180deg, #1c2128 0%, #161b22 100%); padding: 25px 15px; text-align: center; border-bottom: 1px solid #333; }
+        .profile-pic-container { width: 80px; height: 80px; margin: 0 auto 12px; position: relative; }
+        #profile-img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 0 15px rgba(251, 192, 45, 0.2); }
+        
+        .p-action-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-deposit { flex: 1; background: var(--green); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 4px 0 #1e8449; }
+        .btn-withdraw { flex: 1; background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 4px 0 #922b21; }
 
-        /* Account Form In Menu */
-        .complete-acc-box { padding: 15px; }
-        .complete-acc-box h3 { font-size: 14px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; text-align: center; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .mini-input-group { margin-bottom: 12px; }
-        .mini-input-group label { font-size: 11px; color: #aaa; margin-bottom: 4px; display: block; }
-        .mini-input-group input { width: 100%; padding: 10px; background: #0d1117; border: 1px solid #333; color: white; border-radius: 5px; font-size: 13px; outline: none; }
+        /* Form */
+        .acc-form { padding: 20px 15px; }
+        .acc-form h3 { font-size: 14px; color: var(--gold); margin-bottom: 15px; text-transform: uppercase; border-left: 3px solid var(--gold); padding-left: 8px; }
+        .mini-group { margin-bottom: 12px; }
+        .mini-group label { display: block; font-size: 11px; color: #888; margin-bottom: 5px; }
+        .mini-group input { width: 100%; background: #0d1117; border: 1px solid #333; color: white; padding: 10px; border-radius: 6px; outline: none; }
 
-        /* Offer Banner In Menu */
-        .offer-banner {
-            background: linear-gradient(135deg, #b31217 0%, #e67e22 100%);
-            margin: 10px 15px; padding: 15px; border-radius: 10px; 
-            border: 1px dashed white; text-align: center;
-            box-shadow: 0 0 15px rgba(230, 126, 34, 0.4);
-        }
-        .offer-banner h4 { font-size: 16px; font-weight: 900; color: #fff; text-shadow: 1px 1px 2px #000; }
-        .offer-banner p { font-size: 12px; margin-top: 5px; font-weight: bold; color: #fff; line-height: 1.4; }
-        .turnover-tag { display: inline-block; background: #000; color: var(--gold); padding: 2px 8px; border-radius: 4px; font-size: 10px; margin-top: 8px; font-weight: 900; }
+        /* Offer */
+        .menu-offer { background: linear-gradient(135deg, #ff1100, #e67e22); margin: 10px 15px; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+        .menu-offer h4 { font-weight: 900; font-size: 16px; margin-bottom: 5px; }
+        .menu-offer p { font-size: 12px; font-weight: bold; line-height: 1.5; }
 
-        /* --- MAIN HEADER & CONTENT (অপরিবর্তিত) --- */
-        #main-content { display: none; }
-        header { background-color: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .balance-box { display: inline-flex; align-items: center; gap: 5px; background: #0d1117; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--gold); }
+        /* --- CONGRATS MODAL --- */
+        #congrats-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-card { width: 85%; max-width: 320px; background: #1c2128; border-radius: 20px; border: 2px solid var(--gold); position: relative; animation: modalPop 0.4s; overflow: hidden; }
+        .modal-cross { position: absolute; top: 12px; right: 12px; color: #fff; background: rgba(255,255,255,0.1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .modal-cross:hover { background: red; }
 
-        .slider-container { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); position: relative; }
-        .slider { display: flex; height: 100%; width: 100%; transition: 0.8s; }
-        .slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; flex-shrink: 0; }
-
+        /* Slider & Grid (অপরিবর্তিত) */
+        .slider-container { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); }
+        .slider { display: flex; width: 100%; transition: 0.6s; }
+        .slide { min-width: 100%; height: 190px; background-size: cover; background-position: center; }
         .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
         .game-card-wrapper { position: relative; background: var(--card-bg); border-radius: 10px; padding: 2px; overflow: hidden; border: 1px solid var(--gold); }
         .game-card-wrapper::before { content: ''; position: absolute; width: 150%; height: 150%; background-image: conic-gradient(transparent, transparent, transparent, var(--electric-red)); animation: rotateLight 3s linear infinite; top: -25%; left: -25%; }
-        @keyframes rotateLight { 100% { transform: rotate(360deg); } }
         .game-card { position: relative; background: var(--bg-body); border-radius: 8px; overflow: hidden; z-index: 1; }
         .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
 
-        /* Congrats PopUp */
-        #congrats-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-card { width: 85%; max-width: 320px; background: #1c2128; border-radius: 20px; border: 2px solid var(--gold); text-align: center; overflow: hidden; animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .close-modal { position: absolute; top: 10px; right: 10px; color: #fff; background: #ff1100; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 11; }
-
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; }
         .spinner { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
+        
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes modalPop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes modalPop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="signup-page">
-        <div class="signup-header"><div class="logo-text">12x<span>BET</span></div></div>
+        <div class="logo-text">12x<span>BET</span></div>
         <div class="bonus-box">
             <h2 style="color:var(--gold);">Welcome Bonus!</h2>
             <p>৫০০ টাকা ডিপোজিটে ১০০০ টাকা বোনাস! <br>নিচে আপনার গেম আইডি ক্রিয়েট করুন।</p>
@@ -113,58 +114,45 @@
 
     <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
     <div id="side-menu">
-        <div class="profile-section">
-            <div class="profile-pic-box">
+        <div class="profile-card">
+            <div class="profile-pic-container">
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="profile-img">
-                <label for="p-up" class="cam-icon"><i class="fa-solid fa-camera"></i></label>
-                <input type="file" id="p-up" style="display:none" onchange="loadPic()">
             </div>
-            <div id="sideId" style="font-weight: bold; font-size: 14px;">ID: 000000</div>
-            <div class="menu-balance">৳ 200.00</div>
-            <div class="action-btns">
-                <button class="btn-sm" style="background:#27ae60; color:white;">Deposit</button>
-                <button class="btn-sm" style="background:#c0392b; color:white;">Withdraw</button>
+            <div id="sideId" style="font-weight: 900; font-size: 15px; color: #fff;">ID: 000000</div>
+            <div style="color: var(--gold); font-size: 20px; font-weight: 900; margin-top: 5px;">৳ 200.00</div>
+            
+            <div class="p-action-btns">
+                <button class="btn-deposit"><i class="fa-solid fa-plus-circle"></i> DEPOSIT</button>
+                <button class="btn-withdraw"><i class="fa-solid fa-wallet"></i> WITHDRAW</button>
             </div>
         </div>
 
-        <div class="complete-acc-box">
+        <div class="acc-form">
             <h3>Complete Your Account</h3>
-            <div class="mini-input-group">
-                <label>আপনার সম্পূর্ণ নাম</label>
-                <input type="text" placeholder="Enter Full Name">
-            </div>
-            <div class="mini-input-group">
-                <label>আপনার ইমেইল এড্রেস</label>
-                <input type="email" placeholder="example@mail.com">
-            </div>
-            <div class="mini-input-group">
-                <label>আপনার মোবাইল নাম্বার</label>
-                <input type="tel" placeholder="017XXXXXXXX">
-            </div>
-            <div class="mini-input-group">
-                <label>জন্ম তারিখ</label>
-                <input type="date">
-            </div>
-            <button class="submit-btn" style="padding: 8px; font-size: 12px; margin-top: 5px;">Save Info</button>
+            <div class="mini-group"><label>আপনার সম্পূর্ণ নাম</label><input type="text" placeholder="Full Name"></div>
+            <div class="mini-group"><label>আপনার ইমেইল এড্রেস</label><input type="email" placeholder="Email Address"></div>
+            <div class="mini-group"><label>আপনার মোবাইল নাম্বার</label><input type="tel" placeholder="Phone Number"></div>
+            <div class="mini-group"><label>জন্ম তারিখ</label><input type="date"></div>
+            <button class="submit-btn" style="padding: 10px; font-size: 12px;" onclick="saveInfo()">Update Profile</button>
         </div>
 
-        <div class="offer-banner">
+        <div class="menu-offer">
             <h4>PREMIUM OFFER!</h4>
             <p>৳ ২০০ ডিপোজিটে একাউন্টে পাবেন ৳ ৫০০ <br> ৳ ৫০০ ডিপোজিটে একাউন্টে পাবেন ৳ ১২০০</p>
-            <div class="turnover-tag">NO EXTRA TURNOVER</div>
+            <div style="background:#000; color:var(--gold); display:inline-block; padding:2px 10px; border-radius:4px; font-size:10px; margin-top:10px; font-weight:900;">NO EXTRA TURNOVER</div>
         </div>
     </div>
 
     <div id="congrats-modal">
         <div class="modal-card">
-            <div class="close-modal" onclick="closeCongrats()"><i class="fa-solid fa-xmark"></i></div>
-            <div style="background: var(--header-bg); padding: 15px; border-bottom: 1px solid var(--gold);">
-                <div class="logo-text" style="font-size: 20px;">12x<span>BET</span></div>
+            <div class="modal-cross" onclick="closeCongrats()"><i class="fa-solid fa-xmark"></i></div>
+            <div style="background: var(--header-bg); padding: 20px; text-align: center; border-bottom: 1px solid var(--gold);">
+                <div class="logo-text" style="font-size: 24px;">12x<span>BET</span></div>
             </div>
-            <div style="padding: 25px 15px;">
-                <h2 style="color:white">অভিনন্দন!</h2>
-                <p style="color:var(--gold); font-weight:bold; margin-top:10px;">আপনি ২০০ টাকা নিবন্ধন <br> বোনাস পেয়েছেন।</p>
-                <button class="submit-btn" style="margin-top:20px; padding:10px;" onclick="closeCongrats()">গেম খেলুন</button>
+            <div style="padding: 30px 20px; text-align: center;">
+                <h2 style="color:#fff;">অভিনন্দন!</h2>
+                <p style="color:var(--gold); font-weight:bold; margin-top:10px; font-size: 16px;">আপনি ২০০ টাকা নিবন্ধন <br> বোনাস পেয়েছেন।</p>
+                <button class="submit-btn" style="margin-top:25px;" onclick="closeCongrats()">গেম খেলুন</button>
             </div>
         </div>
     </div>
@@ -172,15 +160,15 @@
     <div id="main-content">
         <header>
             <div class="header-left">
-                <i class="fa-solid fa-bars" onclick="toggleMenu()" style="color:var(--gold); font-size: 20px; cursor:pointer;"></i>
-                <div class="main-logo" style="margin-left: 10px;">12x<span>BET</span></div>
+                <i class="fa-solid fa-bars" onclick="toggleMenu()" style="color:var(--gold); font-size: 22px; cursor:pointer;"></i>
+                <div class="logo-text" style="font-size: 22px;">12x<span>BET</span></div>
             </div>
-            <div class="header-right">
-                <span id="topId" style="font-size: 11px; font-weight: bold;">ID: 000000</span>
-                <div class="balance-box">
-                    <i class="fa-solid fa-rotate" style="font-size: 12px;"></i>
-                    <span style="font-size: 13px; font-weight: 800;">৳ 200</span>
-                </div>
+            <div class="wallet-container" onclick="refreshBal(this)">
+                <span class="wallet-label">Main Wallet</span>
+                <span class="wallet-amount">
+                    <i class="fa-solid fa-rotate"></i>
+                    ৳ <span id="balance">200</span>
+                </span>
             </div>
         </header>
 
@@ -193,15 +181,12 @@
         </div>
 
         <div style="padding: 12px; background: linear-gradient(90deg, #21262d, transparent); border-left: 4px solid var(--gold); margin: 15px 0;">
-            <h2 style="font-size: 15px;">OUR <span>HOT PRODUCTS</span></h2>
+            <h2 style="font-size: 16px;">OUR <span>HOT PRODUCTS</span></h2>
         </div>
         <div class="game-grid" id="mainGrid"></div>
     </div>
 
-    <div id="loader">
-        <div class="logo-text">12x<span>BET</span></div>
-        <div class="spinner"></div>
-    </div>
+    <div id="loader"><div class="spinner"></div></div>
 
     <script>
         let currentId = "";
@@ -211,11 +196,9 @@
             document.getElementById('menuOverlay').classList.toggle('active');
         }
 
-        function loadPic() {
-            const file = document.getElementById('p-up').files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => document.getElementById('profile-img').src = reader.result;
-            if (file) reader.readAsDataURL(file);
+        function refreshBal(el) {
+            el.classList.add('refreshing');
+            setTimeout(() => el.classList.remove('refreshing'), 1500);
         }
 
         function startGeneration() {
@@ -237,7 +220,6 @@
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 const idNum = currentId.replace('id','');
-                document.getElementById('topId').innerText = "ID: " + idNum;
                 document.getElementById('sideId').innerText = "ID: " + idNum;
                 initGrid();
                 setTimeout(() => { document.getElementById('congrats-modal').style.display = 'flex'; }, 1000);
@@ -246,9 +228,12 @@
 
         function closeCongrats() { document.getElementById('congrats-modal').style.display = 'none'; }
 
+        function saveInfo() {
+            alert("Success! Your information has been submitted successfully.");
+        }
+
         function initGrid() {
-            const g = document.getElementById('mainGrid');
-            g.innerHTML = "";
+            const g = document.getElementById('mainGrid'); g.innerHTML = "";
             for (let i = 1; i <= 16; i++) {
                 g.innerHTML += `<div class="game-card-wrapper" onclick="openGame()"><div class="game-card"><img src="g${i}.webp"></div></div>`;
             }
