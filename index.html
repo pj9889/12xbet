@@ -18,85 +18,102 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         body { background-color: var(--bg-body); color: white; overflow-x: hidden; }
 
-        /* --- 1. SIGN UP PAGE --- */
-        #signup-page { width: 100%; min-height: 100vh; background: var(--bg-body); display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
+        /* --- SIGN UP PAGE --- */
+        #signup-page { width: 100%; min-height: 100vh; background: var(--bg-body); display: flex; flex-direction: column; align-items: center; padding-top: 50px; z-index: 10000; position: relative; }
         .logo-text { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #fff 40%, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .logo-text span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
-        .gen-btn { background-color: var(--kathali); color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; width: 80%; }
-        .gen-btn.filling::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: red; animation: fillRed 2s forwards; }
+        
+        .bonus-box { background: linear-gradient(45deg, #161b22, #21262d); padding: 20px; border-radius: 15px; border: 1px solid var(--gold); text-align: center; margin: 0 20px 20px; width: 90%; max-width: 400px; }
+        
+        .gen-btn { background-color: var(--kathali); color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; width: 80%; max-width: 300px; }
+        .gen-btn.filling::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: red; animation: fillRed 2s forwards; z-index: 1; }
+        .gen-btn span { position: relative; z-index: 2; }
         @keyframes fillRed { 0% { width: 0; } 100% { width: 100%; } }
-        #id-form { display: none; width: 90%; text-align: center; animation: fadeIn 0.5s; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; font-size: 12px; color: var(--gold); margin-bottom: 5px; }
-        .input-group input { width: 100%; padding: 10px; background: #161b22; border: 1px solid #333; color: white; border-radius: 5px; }
-        .submit-btn { background: linear-gradient(to right, #fbc02d, #e67e22); color: #000; border: none; padding: 12px; width: 100%; font-weight: 800; border-radius: 5px; cursor: pointer; }
 
-        /* --- 2. SIDE PROFILE MENU (DRAWER) --- */
+        #id-form { display: none; width: 90%; max-width: 400px; margin-top: 25px; text-align: center; animation: fadeIn 0.5s; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 13px; color: var(--gold); margin-bottom: 8px; }
+        .input-group input { width: 100%; padding: 12px; background: #161b22; border: 1px solid #333; color: white; border-radius: 5px; outline: none; }
+        .submit-btn { background: linear-gradient(to right, #fbc02d, #e67e22); color: #000; border: none; padding: 15px; width: 100%; font-weight: 800; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
+
+        /* --- SIDE PROFILE MENU (DRAWER) --- */
         #side-menu {
-            position: fixed; top: 0; left: -70%; width: 70%; height: 100%;
+            position: fixed; top: 0; left: -75%; width: 75%; height: 100%;
             background: #161b22; z-index: 5000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-right: 2px solid var(--gold); overflow-y: auto; padding: 20px 15px;
         }
         #side-menu.active { left: 0; }
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 4000; display: none; backdrop-filter: blur(3px); }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 4000; display: none; backdrop-filter: blur(3px); }
         .menu-overlay.active { display: block; }
 
-        /* Profile Section in Menu */
         .profile-box { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px; }
-        .profile-pic-container { position: relative; width: 80px; height: 80px; margin: 0 auto 10px; }
+        .profile-pic-container { position: relative; width: 90px; height: 90px; margin: 0 auto 10px; }
         #profile-img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
-        .upload-icon { position: absolute; bottom: 0; right: 0; background: var(--gold); color: #000; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
-        .menu-user-id { color: #fff; font-size: 14px; font-weight: bold; margin-bottom: 5px; }
-        .menu-balance { color: var(--gold); font-size: 18px; font-weight: 800; margin-bottom: 15px; display: block; }
+        .upload-icon { position: absolute; bottom: 0; right: 0; background: var(--gold); color: #000; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; }
         
-        .action-btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        .btn-sm { padding: 8px 15px; border-radius: 5px; border: none; font-size: 12px; font-weight: bold; cursor: pointer; flex: 1; }
-        .dep-btn { background: #27ae60; color: white; }
-        .with-btn { background: #c0392b; color: white; }
+        .menu-user-id { color: #fff; font-size: 15px; font-weight: bold; margin-bottom: 5px; }
+        .menu-balance { color: var(--gold); font-size: 20px; font-weight: 800; margin-bottom: 15px; display: block; }
+        .action-btns { display: flex; gap: 10px; }
+        .btn-sm { flex: 1; padding: 10px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; }
 
-        /* Hot Games in Menu */
-        .hot-games-title { font-size: 12px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 8px; }
-        .menu-game-list { display: flex; flex-direction: column; gap: 8px; }
-        .menu-game-item { display: flex; align-items: center; gap: 10px; background: #21262d; padding: 8px; border-radius: 8px; border: 1px solid #333; }
-        .menu-game-item img { width: 45px; height: 45px; border-radius: 5px; }
-        .menu-game-item span { font-size: 13px; font-weight: bold; color: #fff; }
+        .hot-games-title { font-size: 12px; color: var(--gold); text-transform: uppercase; margin: 20px 0 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
+        .menu-game-item { display: flex; align-items: center; gap: 12px; background: #21262d; padding: 10px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #333; }
+        .menu-game-item img { width: 50px; height: 50px; border-radius: 8px; }
 
-        /* --- 3. MAIN WEBSITE --- */
+        /* --- MAIN CONTENT STYLES --- */
         #main-content { display: none; }
         header { background-color: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .header-left { display: flex; align-items: center; gap: 12px; }
-        .main-logo { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #fff 40%, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .balance-box { display: inline-flex; align-items: center; gap: 5px; background: #0d1117; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--gold); cursor: pointer; }
+        .balance-box { display: inline-flex; align-items: center; gap: 5px; background: #0d1117; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--gold); cursor: pointer; }
 
-        /* --- Grid & Cards --- */
-        .slider-container { width: 100%; height: 180px; overflow: hidden; border-bottom: 1px solid var(--gold); }
-        .slider { display: flex; width: 100%; }
+        /* Slider */
+        .slider-container { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); }
+        .slider { display: flex; width: 100%; transition: transform 0.6s; }
         .slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; flex-shrink: 0; }
+
+        /* Game Grid */
         .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
         .game-card-wrapper { position: relative; background: var(--card-bg); border-radius: 10px; padding: 2px; overflow: hidden; border: 1px solid var(--gold); }
         .game-card-wrapper::before { content: ''; position: absolute; width: 150%; height: 150%; background-image: conic-gradient(transparent, transparent, transparent, var(--electric-red)); animation: rotateLight 3s linear infinite; top: -25%; left: -25%; }
         @keyframes rotateLight { 100% { transform: rotate(360deg); } }
         .game-card { position: relative; background: var(--bg-body); border-radius: 8px; overflow: hidden; z-index: 1; }
         .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+        .game-card-wrapper:active .game-card { animation: clickShake 0.3s; transform: scale(0.9); }
+        @keyframes clickShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
 
-        /* Loader & Popups */
+        /* Popups & Loader */
         #congrats-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-card { width: 85%; background: #1c2128; border-radius: 20px; border: 2px solid var(--gold); padding: 20px; text-align: center; position: relative; animation: modalPop 0.4s; }
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; }
-        .spinner { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
+        .modal-card { width: 85%; max-width: 320px; background: #1c2128; border-radius: 20px; border: 2px solid var(--gold); padding: 25px; text-align: center; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes modalPop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
     </style>
 </head>
 <body>
 
     <div id="signup-page">
-        <div class="signup-header"><div class="logo-text">12x<span>BET</span></div></div>
-        <button class="gen-btn" id="generateBtn" onclick="startGeneration()"><span>গেম আইডি তৈরি করুন</span></button>
+        <div class="signup-header">
+            <div class="logo-text">12x<span>BET</span></div>
+        </div>
+        <div class="bonus-box">
+            <h2 style="color:var(--gold); margin-bottom:10px;">Welcome Bonus!</h2>
+            <p>৫০০ টাকা ডিপোজিটে ১০০০ টাকা বোনাস! <br>নিচে আপনার গেম আইডি ক্রিয়েট করুন।</p>
+        </div>
+        <button class="gen-btn" id="generateBtn" onclick="startGeneration()">
+            <span>গেম আইডি তৈরি করুন</span>
+        </button>
         <div id="id-form">
-            <h3 style="color:red; margin-bottom: 10px;">ID তৈরি হয়েছে!</h3>
-            <div class="input-group"><label>Game ID:</label><input type="text" id="gameIdDisplay" readonly></div>
-            <div class="input-group"><label>Password:</label><input type="password" id="userPass" placeholder="পাসওয়ার্ড দিন..."></div>
+            <h3 style="color:red; margin-bottom: 15px; font-size: 14px;">আপনার Game ID তৈরি হয়েছে!</h3>
+            <div class="input-group">
+                <label>আপনার Game ID:</label>
+                <input type="text" id="gameIdDisplay" readonly>
+            </div>
+            <div class="input-group">
+                <label>পাসওয়ার্ড সেট করুন:</label>
+                <input type="password" id="userPass" placeholder="পাসওয়ার্ড দিন...">
+            </div>
             <button class="submit-btn" onclick="finalLogin()">Submit & Login</button>
         </div>
     </div>
@@ -107,40 +124,40 @@
             <div class="profile-pic-container">
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="profile-img">
                 <label for="pic-upload" class="upload-icon"><i class="fa-solid fa-camera"></i></label>
-                <input type="file" id="pic-upload" style="display:none" onchange="previewFile()">
+                <input type="file" id="pic-upload" style="display:none" onchange="previewProfilePic()">
             </div>
-            <div class="menu-user-id" id="menuIdText">ID: 000000</div>
+            <div class="menu-user-id" id="sideIdDisplay">ID: 000000</div>
             <div class="menu-balance">৳ 200.00</div>
             <div class="action-btns">
-                <button class="btn-sm dep-btn">Deposit</button>
-                <button class="btn-sm with-btn">Withdraw</button>
+                <button class="btn-sm" style="background:#27ae60; color:white;">Deposit</button>
+                <button class="btn-sm" style="background:#c0392b; color:white;">Withdraw</button>
             </div>
         </div>
 
         <div class="hot-games-title">Our Most Hot Games</div>
-        <div class="menu-game-list" id="menuGameList">
+        <div id="sideGameList">
             </div>
     </div>
 
     <div id="congrats-modal">
         <div class="modal-card">
             <div class="logo-text" style="font-size: 20px;">12x<span>BET</span></div>
-            <h2 style="margin: 15px 0 10px;">অভিনন্দন!</h2>
-            <p style="color:var(--gold);">আপনি ২০০ টাকা নিবন্ধন বোনাস পেয়েছেন।</p>
-            <button class="submit-btn" style="margin-top:20px;" onclick="closeCongrats()">গেম খেলুন</button>
+            <h2 style="margin: 20px 0 10px;">অভিনন্দন!</h2>
+            <p style="color:var(--gold); font-weight:bold;">আপনি ২০০ টাকা নিবন্ধন বোনাস পেয়েছেন।</p>
+            <button class="submit-btn" style="margin-top:20px; padding:12px;" onclick="closeCongrats()">গেম খেলুন</button>
         </div>
     </div>
 
     <div id="main-content">
         <header>
             <div class="header-left">
-                <i class="fa-solid fa-bars menu-icon" onclick="toggleMenu()"></i>
-                <div class="main-logo">12x<span>BET</span></div>
+                <i class="fa-solid fa-bars" onclick="toggleMenu()" style="color:var(--gold); font-size: 22px; cursor:pointer;"></i>
+                <div class="logo-text" style="font-size: 22px; margin-left:12px;">12x<span>BET</span></div>
             </div>
             <div class="header-right">
                 <div class="balance-box" onclick="toggleMenu()">
                     <i class="fa-solid fa-wallet" style="color:var(--gold); font-size:12px;"></i>
-                    <span style="color:var(--gold); font-weight:800; font-size:13px;">৳ 200</span>
+                    <span style="color:var(--gold); font-weight:800; font-size:14px;">৳ 200</span>
                 </div>
             </div>
         </header>
@@ -153,8 +170,8 @@
             </div>
         </div>
 
-        <div style="padding: 10px; border-left: 4px solid var(--gold); margin: 15px 10px;">
-            <h2 style="font-size: 14px;">HOT <span>PRODUCTS</span></h2>
+        <div style="padding: 12px; border-left: 4px solid var(--gold); margin: 15px 10px; background:rgba(255,255,255,0.02);">
+            <h2 style="font-size: 15px; text-transform: uppercase;">HOT <span>PRODUCTS</span></h2>
         </div>
         <div class="game-grid" id="mainGrid"></div>
     </div>
@@ -162,58 +179,84 @@
     <div id="loader">
         <div class="logo-text">12x<span>BET</span></div>
         <div class="spinner"></div>
+        <p style="margin-top:15px; color:var(--gold); font-size:12px;">Connecting to secure server...</p>
     </div>
 
     <script>
-        let currentId = "";
+        let generatedId = "";
 
+        // --- Toggle Menu ---
         function toggleMenu() {
             document.getElementById('side-menu').classList.toggle('active');
             document.getElementById('menuOverlay').classList.toggle('active');
         }
 
-        function previewFile() {
-            const preview = document.getElementById('profile-img');
+        // --- Profile Pic Preview ---
+        function previewProfilePic() {
             const file = document.getElementById('pic-upload').files[0];
             const reader = new FileReader();
-            reader.onloadend = () => preview.src = reader.result;
+            reader.onloadend = () => document.getElementById('profile-img').src = reader.result;
             if (file) reader.readAsDataURL(file);
         }
 
+        // --- Sign Up Flow ---
         function startGeneration() {
             const btn = document.getElementById('generateBtn');
             btn.classList.add('filling');
             setTimeout(() => {
                 btn.style.display = 'none';
                 document.getElementById('id-form').style.display = 'block';
-                currentId = "id" + Math.floor(100000 + Math.random() * 900000);
-                document.getElementById('gameIdDisplay').value = currentId;
+                generatedId = "id" + Math.floor(1000000 + Math.random() * 9000000);
+                document.getElementById('gameIdDisplay').value = generatedId;
             }, 2000);
         }
 
         function finalLogin() {
             if(document.getElementById('userPass').value.length < 4) return alert("পাসওয়ার্ড দিন!");
             document.getElementById('loader').style.display = 'flex';
+            
             setTimeout(() => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                document.getElementById('menuIdText').innerText = "ID: " + currentId.replace('id','');
-                initGrids();
-                setTimeout(() => document.getElementById('congrats-modal').style.display = 'flex', 1000);
+                document.getElementById('sideIdDisplay').innerText = "ID: " + generatedId.replace('id','');
+                
+                initAllGrids();
+                
+                // ১ সেকেন্ড পর অভিনন্দন পপ-আপ
+                setTimeout(() => {
+                    document.getElementById('congrats-modal').style.display = 'flex';
+                }, 1000);
             }, 2000);
         }
 
-        function closeCongrats() { document.getElementById('congrats-modal').style.display = 'none'; }
+        function closeCongrats() {
+            document.getElementById('congrats-modal').style.display = 'none';
+        }
 
-        function initGrids() {
+        // --- Init Grids ---
+        function initAllGrids() {
             const main = document.getElementById('mainGrid');
-            const menu = document.getElementById('menuGameList');
-            main.innerHTML = ""; menu.innerHTML = "";
+            const side = document.getElementById('sideGameList');
+            main.innerHTML = ""; side.innerHTML = "";
+
             for (let i = 1; i <= 16; i++) {
-                main.innerHTML += `<div class="game-card-wrapper" onclick="openGame()"><div class="game-card"><img src="g${i}.webp"></div></div>`;
+                // Main Grid
+                main.innerHTML += `
+                    <div class="game-card-wrapper" onclick="openGame()">
+                        <div class="game-card"><img src="g${i}.webp"></div>
+                    </div>`;
+                
+                // Side Menu (Top 8)
                 if(i <= 8) {
-                    menu.innerHTML += `<div class="menu-game-item" onclick="openGame()"><img src="g${i}.webp"><span>Hot Game ${i}</span></div>`;
+                    side.innerHTML += `
+                        <div class="menu-game-item" onclick="openGame()">
+                            <img src="g${i}.webp">
+                            <div>
+                                <div style="font-size:13px; font-weight:bold;">Hot Game ${i}</div>
+                                <div style="font-size:10px; color:#aaa;">Win Rate 98.5%</div>
+                            </div>
+                        </div>`;
                 }
             }
         }
@@ -226,13 +269,13 @@
             }, 2000);
         }
 
-        let slideCount = 0;
+        // --- Slider Logic ---
+        let slideIdx = 0;
         setInterval(() => {
             const s = document.getElementById('slider');
             if(s) {
-                slideCount = (slideCount + 1) % 3;
-                s.style.transition = "transform 0.8s ease-in-out";
-                s.style.transform = `translateX(-${slideCount * 100}%)`;
+                slideIdx = (slideIdx + 1) % 3;
+                s.style.transform = `translateX(-${slideIdx * 100}%)`;
             }
         }, 4000);
     </script>
