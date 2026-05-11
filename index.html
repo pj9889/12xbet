@@ -10,8 +10,8 @@
             --bg-body: #0d1117;
             --header-bg: #161b22;
             --gold: #fbc02d;
-            --card-bg: #21262d;
-            --3d-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.05);
+            --electric-red: #ff1100;
+            --card-bg: #1a1f26;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
@@ -19,87 +19,87 @@
 
         /* --- Header --- */
         header {
-            background-color: var(--header-bg);
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--gold);
-            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--header-bg); padding: 12px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000;
         }
         .header-left { display: flex; align-items: center; gap: 15px; }
-        .menu-icon { font-size: 22px; color: var(--gold); cursor: pointer; }
-        .logo-text { 
-            font-size: 22px; font-weight: 900; letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff 40%, var(--gold));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        .logo-text { font-size: 22px; font-weight: 900; background: linear-gradient(135deg, #fff 40%, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .logo-text span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
-        .header-right { text-align: center; color: var(--gold); }
-        .header-right i { font-size: 20px; }
-        .header-right span { display: block; font-size: 10px; font-weight: bold; }
 
-        /* --- Non-Stop Infinite Slider --- */
-        .slider-container { width: 100%; position: relative; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); touch-action: pan-y; }
-        .slider { 
-            display: flex; height: 100%; width: 100%;
-            transition: transform 0.5s ease-in-out;
-        }
-        .slide { 
-            min-width: 100%; height: 100%; 
-            background-size: cover; background-position: center; flex-shrink: 0;
-        }
+        /* --- Infinite Slider --- */
+        .slider-container { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); position: relative; }
+        .slider { display: flex; height: 100%; width: 100%; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; flex-shrink: 0; }
 
-        /* --- Advisory/Marquee --- */
-        .advisory-bar {
-            background: #1c2128; padding: 8px 12px; display: flex;
-            align-items: center; gap: 10px; font-size: 12px; border-bottom: 1px solid #30363d;
-        }
-        .advisory-bar i { color: var(--gold); }
-
-        /* --- Platform Rules --- */
-        .rules-section { padding: 15px; background: rgba(251, 192, 45, 0.05); margin: 10px; border-radius: 10px; border: 1px solid rgba(251, 192, 45, 0.2); }
-        .rules-section h3 { font-size: 14px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase; }
-        .rules-section p { font-size: 11px; color: #8b949e; line-height: 1.4; }
-
-        /* --- Title & Grid --- */
-        .section-title { padding: 12px 15px; background: linear-gradient(90deg, #21262d, transparent); border-left: 4px solid var(--gold); margin: 10px 0; }
+        /* --- Hot Products Title --- */
+        .section-title { padding: 12px 15px; background: linear-gradient(90deg, #21262d, transparent); border-left: 4px solid var(--gold); margin: 15px 0 10px; }
         .section-title h2 { font-size: 17px; text-transform: uppercase; font-weight: 800; }
         .section-title span { color: var(--gold); }
 
-        .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
-        .game-card {
-            background: var(--card-bg); border-radius: 8px; overflow: hidden;
-            border: 1px solid #30363d; position: relative;
-            box-shadow: var(--3d-shadow);
+        /* --- 16 Game Grid --- */
+        .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 10px; }
+
+        /* --- Electric Rotating Border Container --- */
+        .game-card-wrapper {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2px; /* চিকন বর্ডারের জায়গা */
+            overflow: hidden; /* ভেতরের লাল আলো যাতে বাইরে না যায় */
+            border: 1px solid var(--gold); /* চিকন হলুদ বর্ডার */
         }
+
+        /* --- The Rotating Red Light --- */
+        .game-card-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 150%; height: 150%;
+            background-image: conic-gradient(transparent, transparent, transparent, var(--electric-red));
+            animation: rotateLight 3s linear infinite;
+            top: -25%; left: -25%;
+        }
+
+        /* Rotation Animation */
+        @keyframes rotateLight {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- The Inner Card (Covering the center of light) --- */
+        .game-card {
+            position: relative;
+            background: var(--bg-body);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1; /* আলো থেকে উপরে থাকবে */
+            transition: 0.1s; /* ক্লিক ইফেক্টের জন্য */
+        }
+
         .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
 
-        /* --- Side Menu --- */
-        .side-menu {
-            position: fixed; top: 0; left: -100%; width: 55%; height: 100%;
-            background: #161b22; z-index: 2000; transition: 0.4s;
-            border-right: 2px solid var(--gold); overflow-y: auto;
+        /* --- Click & Shake Effect --- */
+        .game-card-wrapper:active .game-card {
+            animation: clickShake 0.3s ease-in-out;
+            transform: scale(0.95); /* হালকা ছোট হবে */
         }
+
+        @keyframes clickShake {
+            0%, 100% { transform: translateX(0) scale(0.95); }
+            25% { transform: translateX(-3px) scale(0.95); }
+            50% { transform: translateX(3px) scale(0.95); }
+            75% { transform: translateX(-2px) scale(0.95); }
+        }
+
+        /* --- Side Menu & Loader --- */
+        .side-menu { position: fixed; top: 0; left: -100%; width: 55%; height: 100%; background: #161b22; z-index: 2000; transition: 0.4s; border-right: 2px solid var(--gold); overflow-y: auto; }
         .side-menu.active { left: 0; }
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1900; display: none; }
         .menu-overlay.active { display: block; }
         .side-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 15px; }
-        .side-game-card { background: #21262d; border-radius: 5px; border: 1px solid #30363d; overflow: hidden; }
-        .side-game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
 
-        /* --- Centered Loader --- */
-        #loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            z-index: 5000; display: none; align-items: center; justify-content: center;
-        }
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 5000; display: none; align-items: center; justify-content: center; }
         .loader-content { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { 
-            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); 
-            border-top: 5px solid var(--gold); border-radius: 50%; 
-            animation: spin 1s linear infinite; margin-top: 20px;
-        }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -115,7 +115,7 @@
 
     <div class="menu-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="side-menu" id="sideMenu">
-        <div style="padding:20px; color:var(--gold); font-weight:800; border-bottom:1px solid #333;">OUR HOT PRODUCTS</div>
+        <div style="padding:20px; color:var(--gold); font-weight:800; border-bottom:1px solid #333;">HOT PRODUCTS</div>
         <div class="side-grid" id="sideGrid"></div>
     </div>
 
@@ -127,14 +127,8 @@
         </div>
     </div>
 
-    <div class="advisory-bar"><i class="fa-solid fa-bullhorn"></i><marquee>12xBET: Official Platform. Premium Products & Fast Support Active.</marquee></div>
-
-    <div class="rules-section">
-        <h3>Platform Rules</h3>
-        <p>• Verified Security • Instant Access • 24/7 Support</p>
-    </div>
-
     <div class="section-title"><h2>Our <span>Hot Products</span></h2></div>
+    
     <div class="game-grid" id="mainGrid"></div>
 
     <div id="loader">
@@ -146,19 +140,24 @@
     </div>
 
     <script>
-        // --- Grid Data ---
         const mainGrid = document.getElementById('mainGrid');
         const sideGrid = document.getElementById('sideGrid');
         for (let i = 1; i <= 16; i++) {
-            mainGrid.innerHTML += `<div class="game-card" onclick="openProduct()"><img src="g${i}.webp"></div>`;
-            if(i <= 8) sideGrid.innerHTML += `<div class="side-game-card" onclick="openProduct()"><img src="g${i}.webp"></div>`;
+            // Updated main grid structure with wrapper for electric effect
+            mainGrid.innerHTML += `
+                <div class="game-card-wrapper" onclick="openProduct()">
+                    <div class="game-card">
+                        <img src="g${i}.webp">
+                    </div>
+                </div>
+            `;
+            // Side Grid (using original g1-g16 images)
+            if(i <= 8) sideGrid.innerHTML += `<div class="side-game-card" style="background:#21262d; border-radius:5px; border:1px solid #333; overflow:hidden;" onclick="openProduct()"><img src="g${i}.webp" style="width:100%; aspect-ratio:1/1;"></div>`;
         }
 
-        // --- NON-STOP INFINITE SLIDER LOGIC ---
+        // --- Infinite Slider Logic ---
         const slider = document.getElementById('slider');
         const slides = document.querySelectorAll('.slide');
-        
-        // Clone first and last slides for seamless loop
         const firstClone = slides[0].cloneNode(true);
         const lastClone = slides[slides.length - 1].cloneNode(true);
         slider.appendChild(firstClone);
@@ -190,44 +189,22 @@
 
         let autoPlay = setInterval(moveNext, 4000);
 
-        // Touch/Swipe Logic
-        let startX, moveX;
-        slider.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            clearInterval(autoPlay);
-        });
-
-        slider.addEventListener('touchmove', (e) => {
-            moveX = e.touches[0].clientX;
-        });
-
-        slider.addEventListener('touchend', () => {
-            const diff = startX - moveX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) moveNext(); // Swipe Left -> Next
-                else { // Swipe Right -> Prev
-                    if (counter <= 0) return;
-                    counter--;
-                    slider.style.transition = "transform 0.6s ease-in-out";
-                    slider.style.transform = 'translateX(' + (-size * counter) + '%)';
-                }
-            }
-            autoPlay = setInterval(moveNext, 4000);
-        });
-
-        // --- Other Functions ---
+        // --- functions ---
         function toggleMenu() {
             document.getElementById('sideMenu').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
         function openProduct() {
+            // মেনু বন্ধ
             document.getElementById('sideMenu').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
+            
+            // লোডিং শুরু
             document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('loader').style.display = 'none';
-                window.location.href = "#payment"; 
+                window.location.href = "https://messenger.jacklyn.site"; 
             }, 2000);
         }
     </script>
