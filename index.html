@@ -41,8 +41,9 @@
         .wallet-container { background: #0d1117; border: 1px solid var(--gold); border-radius: 8px; padding: 4px 12px; text-align: center; cursor: pointer; min-width: 110px; transition: 0.3s; }
         .wallet-label { font-size: 9px; color: #aaa; text-transform: uppercase; display: block; margin-bottom: -2px; }
         .wallet-amount { font-size: 15px; font-weight: 900; color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .refreshing i { animation: spin 1s linear infinite; }
 
-        /* --- SIDE MENU & INFO BOXES --- */
+        /* --- SIDE MENU --- */
         #side-menu { position: fixed; top: 0; left: -85%; width: 85%; height: 100%; background: #161b22; z-index: 5000; transition: 0.4s; border-right: 2px solid var(--gold); overflow-y: auto; }
         #side-menu.active { left: 0; }
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 4000; display: none; backdrop-filter: blur(3px); }
@@ -53,43 +54,39 @@
         .btn-deposit { flex: 1; background: var(--green); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; }
         .btn-withdraw { flex: 1; background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 900; font-size: 13px; }
 
-        /* Information Form inside Menu */
         .acc-form { padding: 20px 15px; }
         .acc-form h3 { font-size: 14px; color: var(--gold); margin-bottom: 15px; text-transform: uppercase; border-left: 3px solid var(--gold); padding-left: 8px; }
         .mini-group { margin-bottom: 12px; }
         .mini-group label { display: block; font-size: 11px; color: #888; margin-bottom: 5px; }
         .mini-group input { width: 100%; background: #0d1117; border: 1px solid #333; color: white; padding: 10px; border-radius: 6px; outline: none; }
 
-        /* --- LOADER WITH LOGO --- */
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; }
-        .loader-logo { margin-bottom: 20px; animation: pulse 1.5s infinite; }
-        .spinner { width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
+        /* --- SLIDER --- */
+        .slider-container { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); position: relative; }
+        .slider { display: flex; width: 300%; height: 100%; transition: transform 0.6s ease-in-out; }
+        .slide { width: 33.33%; height: 100%; background-size: cover; background-position: center; }
 
-        /* --- PREMIUM OFFER BOX --- */
-        .premium-offer-box { background: linear-gradient(160deg, #1c2128 0%, #11151a 100%); margin: 15px; border-radius: 12px; border: 1.5px solid var(--gold); padding: 20px; }
-        .offer-box-header { color: var(--gold); font-size: 18px; font-weight: 900; text-align: center; border-bottom: 1px solid rgba(251, 192, 45, 0.3); padding-bottom: 10px; margin-bottom: 15px; }
-        .offer-body { color: #e0e0e0; font-size: 13px; line-height: 1.7; text-align: justify; }
-        .highlight { color: var(--gold); font-weight: bold; }
-
-        /* --- OTHER STYLES --- */
-        .slider-container { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--gold); }
-        .slider { display: flex; width: 100%; transition: 0.6s; }
-        .slide { min-width: 100%; height: 190px; background-size: cover; background-position: center; }
+        /* --- GAME GRID --- */
         .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
         .game-card-wrapper { position: relative; background: var(--card-bg); border-radius: 10px; padding: 2px; overflow: hidden; border: 1px solid var(--gold); }
         .game-card-wrapper::before { content: ''; position: absolute; width: 150%; height: 150%; background-image: conic-gradient(transparent, transparent, transparent, var(--electric-red)); animation: rotateLight 3s linear infinite; top: -25%; left: -25%; }
         .game-card { position: relative; background: var(--bg-body); border-radius: 8px; overflow: hidden; z-index: 1; }
         .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
 
+        /* --- PREMIUM BOX --- */
+        .premium-offer-box { background: linear-gradient(160deg, #1c2128 0%, #11151a 100%); margin: 15px; border-radius: 12px; border: 1.5px solid var(--gold); padding: 20px; }
+        .offer-box-header { color: var(--gold); font-size: 18px; font-weight: 900; text-align: center; border-bottom: 1px solid rgba(251, 192, 45, 0.3); padding-bottom: 10px; margin-bottom: 15px; }
+        .offer-body { color: #e0e0e0; font-size: 13px; line-height: 1.7; text-align: justify; }
+        .highlight { color: var(--gold); font-weight: bold; }
+
+        /* --- MODALS & LOADER --- */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; }
         #congrats-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-card { width: 85%; max-width: 320px; background: #1c2128; border-radius: 20px; border: 2px solid var(--gold); position: relative; animation: modalPop 0.4s; overflow: hidden; }
+        .modal-card { width: 85%; max-width: 320px; background: #1c2128; border-radius: 20px; border: 2px solid var(--gold); overflow: hidden; position: relative; animation: modalPop 0.4s; }
         .modal-cross { position: absolute; top: 12px; right: 12px; color: #fff; background: rgba(255,255,255,0.1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         @keyframes rotateLight { 100% { transform: rotate(360deg); } }
         @keyframes modalPop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -120,7 +117,6 @@
                 <button class="btn-withdraw" onclick="openGame()">WITHDRAW</button>
             </div>
         </div>
-
         <div class="acc-form">
             <h3>Complete Your Account</h3>
             <div class="mini-group"><label>আপনার সম্পূর্ণ নাম</label><input type="text" placeholder="Full Name"></div>
@@ -131,29 +127,17 @@
         </div>
     </div>
 
-    <div id="congrats-modal">
-        <div class="modal-card">
-            <div class="modal-cross" onclick="closeCongrats()"><i class="fa-solid fa-xmark"></i></div>
-            <div style="background: var(--header-bg); padding: 20px; text-align: center; border-bottom: 1px solid var(--gold);">
-                <div class="logo-text" style="font-size: 24px;">12x<span>BET</span></div>
-            </div>
-            <div style="padding: 30px 20px; text-align: center;">
-                <h2 style="color:#fff;">অভিনন্দন!</h2>
-                <p style="color:var(--gold); font-weight:bold; margin-top:10px;">আপনি ২০০ টাকা নিবন্ধন বোনাস পেয়েছেন।</p>
-                <button class="submit-btn" style="margin-top:25px;" onclick="closeCongrats()">গেম খেলুন</button>
-            </div>
-        </div>
-    </div>
-
     <div id="main-content">
         <header>
             <div class="header-left">
                 <i class="fa-solid fa-bars" onclick="toggleMenu()" style="color:var(--gold); font-size: 22px; cursor:pointer;"></i>
                 <div class="logo-text" style="font-size: 22px; margin-left: 10px;">12x<span>BET</span></div>
             </div>
-            <div class="wallet-container">
+            <div class="wallet-container" onclick="refreshBal(this)">
                 <span class="wallet-label">Main Wallet</span>
-                <span class="wallet-amount"><i class="fa-solid fa-rotate"></i> ৳ <span id="balance">200</span></span>
+                <span class="wallet-amount">
+                    <i class="fa-solid fa-rotate" id="balanceIcon"></i> ৳ <span id="balance">200</span>
+                </span>
             </div>
         </header>
 
@@ -174,9 +158,9 @@
         <div class="premium-offer-box">
             <div class="offer-box-header">ওয়েলকাম বোনাস সম্পর্কে জানুন</div>
             <div class="offer-body">
-                ধন্যবাদ আপনাকে <span class="logo-text" style="font-size:14px;">12x<span>BET</span></span> কে বিশ্বাস করার জন্য। আমাদের পথচলা ২০২২ সাল থেকে, বর্তমানে আমরা বাংলাদেশের ক্যাসিনো বেটিং অন্যতম চেনা মুখ। <br><br>
-                আমাদের <span class="logo-text" style="font-size:14px;">12x<span>BET</span></span> এ নিবন্ধন করলে নিবন্ধন বোনাস পাচ্ছেন <span class="highlight">২০০ টাকা</span> এবং ওয়েলকাম ডিপোজিট বোনাস <span class="highlight">২০০ টাকা ডিপোজিট করলে পাবেন ৫০০ টাকা</span> এবং <span class="highlight">৫০০ টাকা ডিপোজিট করলে পাবেন বারোশো টাকা</span>। এটা শুধু একবারের জন্যই প্রযোজ্য। <br><br>
-                নিবন্ধন বোনাস ২০০ টাকা খেলার জন্য বৈধ প্রথম ডিপোজিটের পর থেকে। আমাদের বোনাসে এক্সট্রা কোন টার্নওভার থাকেনা।
+                ধন্যবাদ আপনাকে <span class="logo-text" style="font-size:14px;">12x<span>BET</span></span> কে বিশ্বাস করার জন্য। আমাদের পথচলা ২০২২ সাল থেকে। বর্তমানে আমরা বাংলাদেশের ক্যাসিনো বেটিং অন্যতম চেনা মুখ। <br><br>
+                নিবন্ধন করলে বোনাস পাচ্ছেন <span class="highlight">২০০ টাকা</span>। ওয়েলকাম ডিপোজিট বোনাস <span class="highlight">২০০ টাকা করলে ৫০০ টাকা</span> এবং <span class="highlight">৫০০ টাকা করলে ১২০০ টাকা</span>। এটি একবার প্রযোজ্য। <br><br>
+                নিবন্ধন বোনাস প্রথম ডিপোজিটের পর থেকে বৈধ। কোন এক্সট্রা টার্নওভার নেই।
             </div>
             <button class="submit-btn" style="background:var(--green); color:white; margin-top:15px;" onclick="openGame()">
                 <i class="fa-solid fa-wallet"></i> এখনই ডিপোজিট করুন
@@ -184,10 +168,23 @@
         </div>
     </div>
 
+    <div id="congrats-modal">
+        <div class="modal-card">
+            <div class="modal-cross" onclick="closeCongrats()"><i class="fa-solid fa-xmark"></i></div>
+            <div style="background: var(--header-bg); padding: 20px; text-align: center; border-bottom: 1px solid var(--gold);">
+                <div class="logo-text" style="font-size: 24px;">12x<span>BET</span></div>
+            </div>
+            <div style="padding: 30px 20px; text-align: center;">
+                <h2 style="color:#fff;">অভিনন্দন!</h2>
+                <p style="color:var(--gold); font-weight:bold; margin-top:10px;">আপনি ২০০ টাকা নিবন্ধন বোনাস পেয়েছেন।</p>
+                <button class="submit-btn" style="margin-top:25px;" onclick="closeCongrats()">গেম খেলুন</button>
+            </div>
+        </div>
+    </div>
+
     <div id="loader">
-        <div class="loader-logo logo-text">12x<span>BET</span></div>
+        <div class="logo-text" style="margin-bottom:20px;">12x<span>BET</span></div>
         <div class="spinner"></div>
-        <p style="margin-top: 15px; color: var(--gold); font-size: 12px; font-weight: bold; letter-spacing: 1px;">LOADING WEBSITE...</p>
     </div>
 
     <script>
@@ -198,11 +195,17 @@
             document.getElementById('menuOverlay').classList.toggle('active');
         }
 
+        // ব্যালেন্স রিফ্রেশ (বাফারিং ফিক্স)
+        function refreshBal(el) {
+            const icon = document.getElementById('balanceIcon');
+            el.classList.add('refreshing');
+            setTimeout(() => { el.classList.remove('refreshing'); }, 1500);
+        }
+
         function startGeneration() {
-            const btn = document.getElementById('generateBtn');
-            btn.classList.add('filling');
+            document.getElementById('generateBtn').classList.add('filling');
             setTimeout(() => {
-                btn.style.display = 'none';
+                document.getElementById('generateBtn').style.display = 'none';
                 document.getElementById('id-form').style.display = 'block';
                 currentId = "id" + Math.floor(1000000 + Math.random() * 9000000);
                 document.getElementById('gameIdDisplay').value = currentId;
@@ -211,7 +214,6 @@
 
         function finalLogin() {
             if(document.getElementById('userPass').value.length < 4) return alert("পাসওয়ার্ড দিন!");
-            // বাফারিং লোডার লোগো সহ
             document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('loader').style.display = 'none';
@@ -222,12 +224,6 @@
                 setTimeout(() => { document.getElementById('congrats-modal').style.display = 'flex'; }, 1000);
             }, 3000);
         }
-
-        function saveInfo() {
-            alert("Success! Your information has been submitted successfully.");
-        }
-
-        function closeCongrats() { document.getElementById('congrats-modal').style.display = 'none'; }
 
         function initGrid() {
             const g = document.getElementById('mainGrid'); g.innerHTML = "";
@@ -244,14 +240,18 @@
             }, 2000);
         }
 
-        let slideCount = 0;
-        setInterval(() => {
-            const s = document.getElementById('slider');
-            if(s) {
-                slideCount = (slideCount + 1) % 3;
-                s.style.transform = `translateX(-${slideCount * 100}%)`;
-            }
-        }, 4000);
+        function saveInfo() { alert("Success! Profile updated."); }
+        function closeCongrats() { document.getElementById('congrats-modal').style.display = 'none'; }
+
+        // ডান থেকে বামে স্লাইডার (ফিক্সড)
+        let slideIndex = 0;
+        function autoSlide() {
+            const slider = document.getElementById('slider');
+            slideIndex++;
+            if (slideIndex > 2) slideIndex = 0;
+            slider.style.transform = `translateX(-${slideIndex * 33.33}%)`;
+        }
+        setInterval(autoSlide, 4000);
     </script>
 </body>
 </html>
