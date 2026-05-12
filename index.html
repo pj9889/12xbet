@@ -87,6 +87,25 @@
         .copy-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin: 10px 0; }
         .trx-field { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; margin-top: 10px; outline: none; }
         #block-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 60000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; color: #000; }
+
+        /* --- SUPPORT FLOATING UI --- */
+        .support-trigger { position: fixed; bottom: 30px; right: 20px; width: 60px; height: 60px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 28px; cursor: pointer; z-index: 9999; box-shadow: 0 5px 20px rgba(0,0,0,0.5); border: 2px solid #fff; }
+        .support-badge { position: absolute; top: -5px; right: -2px; background: red; color: #fff; font-size: 10px; padding: 3px 7px; border-radius: 50%; border: 1px solid #fff; font-weight: bold; }
+
+        #support-chat-box { position: fixed; bottom: 0; right: 0; width: 100%; height: 50%; background: #fff; z-index: 10000; display: none; flex-direction: column; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .chat-header { background: #161b22; color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; border-radius: 20px 20px 0 0; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #f0f2f5; display: flex; flex-direction: column; gap: 10px; }
+        .chat-footer { padding: 10px; display: flex; gap: 10px; border-top: 1px solid #ddd; background: #fff; }
+        .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; border-radius: 25px; outline: none; color: #333; }
+        .send-btn { background: var(--gold); border: none; width: 40px; height: 40px; border-radius: 50%; color: #000; cursor: pointer; }
+        
+        .msg-bubble { max-width: 80%; padding: 12px; border-radius: 15px; font-size: 13px; line-height: 1.5; position: relative; }
+        .bot-msg { background: #fff; color: #333; border-bottom-left-radius: 2px; align-self: flex-start; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .user-msg { background: #007bff; color: #fff; border-bottom-right-radius: 2px; align-self: flex-end; }
+        .bot-profile { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .bot-avatar { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); }
+        .bot-name { font-size: 11px; font-weight: bold; color: #555; }
     </style>
 </head>
 <body>
@@ -104,6 +123,37 @@
             <button class="complete-btn" onclick="handleRegistration()">Complete Registration</button>
         </div>
     </section>
+
+    <div class="support-trigger" id="supportTrigger" onclick="toggleChat()">
+        <i class="fa-solid fa-headset"></i>
+        <div class="support-badge" id="chatBadge">1</div>
+    </div>
+
+    <div id="support-chat-box">
+        <div class="chat-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="https://i.ibb.co/VWVm0Yn/rubina.png" class="bot-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
+                <div>
+                    <div style="font-size:14px; font-weight:bold;">Help Center</div>
+                    <div style="font-size:10px; color:var(--green);"><i class="fa-solid fa-circle" style="font-size:8px;"></i> Online</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-down" onclick="toggleChat()" style="cursor:pointer;"></i>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="bot-profile">
+                <img src="https://i.ibb.co/VWVm0Yn/rubina.png" class="bot-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
+                <span class="bot-name">Rubina Khatun</span>
+            </div>
+            <div class="msg-bubble bot-msg">
+                স্যার, আপনাকে ধন্যবাদ আমাদের প্ল্যাটফর্ম বাছাই করার জন্য। এখনই নিবন্ধন করুন এবং সাথে সাথে ২০০ টাকা নিবন্ধন বোনাস একাউন্টে নিয়ে নিন। আর সকল নতুন ইউজারদের জন্য প্রথম ডিপোজিট বোনাস ২০০৳=৫০০৳ এবং ৫০০৳=১২০০৳, এই ডিপোজিট অফারটি শুধু একবারের জন্য।
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="userMsgInput" class="chat-input" placeholder="এখানে লিখুন...">
+            <button class="send-btn" onclick="sendUserMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <div id="welcome-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'welcome-modal')">
         <div class="modal-content">
@@ -156,8 +206,8 @@
         </div>
         <div class="pay-body">
             <div class="method-tabs">
-                <div class="tab-btn active" onclick="switchMethod('bkash', this)"><img src="https://i.ibb.co/vY8p0M5/bkash.png" alt="bkash"></div>
-                <div class="tab-btn" onclick="switchMethod('nagad', this)"><img src="https://i.ibb.co/0Y1f9Yn/nagad.png" alt="nagad"></div>
+                <div class="tab-btn active" onclick="switchMethod('bkash', this)"><img src="bkash.png" alt="bkash"></div>
+                <div class="tab-btn" onclick="switchMethod('nagad', this)"><img src="nagad.png" alt="nagad"></div>
             </div>
             <div id="pay-card-bg" class="pay-card" style="background: #e2136e;">
                 <span id="method-label" style="background:#fff; color:#e2136e; padding:2px 8px; border-radius:5px; font-weight:bold; font-size:12px;">বিকাশ পার্সোনাল</span>
@@ -263,6 +313,32 @@
                         </div>
                     </div>`;
             }
+        }
+
+        function toggleChat() {
+            const box = document.getElementById('support-chat-box');
+            const badge = document.getElementById('chatBadge');
+            if(box.style.display === 'flex') {
+                box.style.display = 'none';
+            } else {
+                box.style.display = 'flex';
+                badge.style.display = 'none';
+                const body = document.getElementById('chatBody');
+                body.scrollTop = body.scrollHeight;
+            }
+        }
+
+        function sendUserMsg() {
+            const input = document.getElementById('userMsgInput');
+            const body = document.getElementById('chatBody');
+            if(input.value.trim() === "") return;
+
+            const div = document.createElement('div');
+            div.className = 'msg-bubble user-msg';
+            div.innerText = input.value;
+            body.appendChild(div);
+            input.value = "";
+            body.scrollTop = body.scrollHeight;
         }
 
         function onGameClick(img) {
