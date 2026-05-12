@@ -115,7 +115,7 @@
         .bot-name { font-size: 11px; font-weight: bold; color: #555; }
     </style>
 </head>
-<body onload="checkBlockStatus()">
+<body onload="initApp()">
 
     <div id="block-screen">
         <i class="fa-solid fa-circle-exclamation" style="font-size:70px; color:red;"></i>
@@ -300,13 +300,27 @@
     </div>
 
     <script>
-        // Check Block Status from LocalStorage on load
-        function checkBlockStatus() {
+        // Initialize App and Check Local Storage Status
+        function initApp() {
+            // Check Block Status
             if (localStorage.getItem('userBlocked') === 'true') {
                 document.getElementById('block-screen').style.display = 'flex';
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'none';
                 document.getElementById('supportTrigger').style.display = 'none';
+                return;
+            }
+
+            // Check Registration Status
+            if (localStorage.getItem('isRegistered') === 'true') {
+                const savedEmail = localStorage.getItem('userEmail');
+                const savedID = localStorage.getItem('userID');
+                
+                document.getElementById('signup-page').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('displayEmail').innerText = savedEmail;
+                document.getElementById('displayID').innerText = savedID;
+                renderGames();
             }
         }
 
@@ -316,11 +330,19 @@
         function handleRegistration() {
             const email = document.getElementById('regEmail').value;
             if(!email.includes('@')) return alert("সঠিক ইমেইল দিন!");
+            
+            const randomID = Math.floor(100000 + Math.random() * 900000);
+            
             showLoader(2000, () => {
+                // Save to Local Storage
+                localStorage.setItem('isRegistered', 'true');
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userID', randomID);
+
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('displayEmail').innerText = email;
-                document.getElementById('displayID').innerText = Math.floor(100000 + Math.random() * 900000);
+                document.getElementById('displayID').innerText = randomID;
                 document.getElementById('welcome-modal').style.display = 'flex';
                 renderGames();
             });
@@ -333,7 +355,6 @@
             localStorage.setItem('failCount', failedAttempts);
 
             if(failedAttempts >= 4) {
-                // Permanently block user using LocalStorage
                 localStorage.setItem('userBlocked', 'true');
                 document.getElementById('payment-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'none';
