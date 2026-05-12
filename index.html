@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>12xBET - Elite Premium Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
         }
         @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        /* --- REGISTRATION PAGE --- */
+        /* --- NEWS BAR & REGISTRATION --- */
         #signup-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: radial-gradient(circle at top, #1a1a2e, #07090c); padding-top: 40px; }
         .news-bar { width: 100%; background: rgba(255, 0, 0, 0.15); border-top: 1px solid var(--fire-red); border-bottom: 1px solid var(--fire-red); padding: 8px 0; margin-bottom: 30px; overflow: hidden; white-space: nowrap; }
         .news-text { display: inline-block; padding-left: 100%; font-size: 13px; animation: marquee 25s linear infinite; color: #fff; }
@@ -52,15 +52,6 @@
         @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-modal { position: absolute; top: 15px; right: 15px; color: #fff; font-size: 20px; cursor: pointer; }
 
-        /* --- BONUS OPTION STYLES --- */
-        .bonus-box { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; text-align: left; }
-        .bonus-opt { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 12px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
-        .bonus-opt.active { border-color: var(--gold); background: rgba(255,204,0,0.1); }
-        .dot { height: 18px; width: 18px; border: 2px solid var(--gold); border-radius: 50%; margin-right: 12px; position: relative; }
-        .bonus-opt.active .dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
-        .opt-txt b { color: var(--gold); font-size: 14px; }
-        .opt-txt span { color: #ccc; font-size: 11px; display: block; }
-
         /* --- SIDEBAR --- */
         #side-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: #0d1117; z-index: 5000; transition: 0.4s; border-right: 1px solid var(--gold); overflow-y: auto; }
         #side-menu.active { left: 0; }
@@ -68,6 +59,14 @@
         .profile-pic-wrapper { position: relative; width: 85px; height: 85px; margin: 0 auto; }
         .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; }
 
+        /* --- LOADER (With Buffering Symbol) --- */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .buffering-symbol { width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-top: 15px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 4000; }
+        .menu-overlay.active { display: block; }
+        
         /* --- MAIN UI --- */
         #main-content { display: none; }
         header { background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(10px); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--gold); }
@@ -76,40 +75,31 @@
         .game-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, transparent, transparent, var(--fire-red)); animation: fireRotate 3s linear infinite; }
         @keyframes fireRotate { 100% { transform: rotate(360deg); } }
         
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 4000; }
-        .menu-overlay.active { display: block; }
-        
         .slider-wrapper { width: 100%; height: 190px; overflow: hidden; position: relative; border-bottom: 1px solid var(--gold); }
         .slider-track { display: flex; width: 300%; height: 100%; transition: transform 0.8s ease-in-out; }
         .slide { width: 33.33%; height: 100%; background-size: cover; background-position: center; }
-        .refreshing { animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- PAYMENT PAGE STYLES --- */
-        #payment-page { display: none; background: #f0f2f5; min-height: 100vh; color: #000; position: fixed; top: 0; left: 0; width: 100%; z-index: 15000; overflow-y: auto; }
-        .payment-container { width: 100%; max-width: 400px; background: white; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
-        .pay-header { padding: 15px; border-bottom: 1px solid #ddd; display: flex; align-items: center; background: white; position: sticky; top: 0; z-index: 10; }
-        .back-btn { font-size: 20px; color: #65676b; cursor: pointer; margin-right: 15px; }
+        /* Bonus styles */
+        .bonus-box { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; text-align: left; }
+        .bonus-opt { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 12px; display: flex; align-items: center; cursor: pointer; }
+        .bonus-opt.active { border-color: var(--gold); background: rgba(255,204,0,0.1); }
+        .dot { height: 18px; width: 18px; border: 2px solid var(--gold); border-radius: 50%; margin-right: 12px; position: relative; }
+        .bonus-opt.active .dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
+
+        /* --- PAYMENT TEMPLATE SECTION (Integrated) --- */
+        #payment-section { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 25000; overflow-y: auto; color: #000; }
+        .payment-container { width: 100%; max-width: 400px; background: white; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+        .pay-header { padding: 15px; border-bottom: 1px solid #ddd; display: flex; align-items: center; background: white; }
         .pay-header h3 { margin: 0; flex: 1; text-align: center; font-size: 18px; color: #050505; }
         .method-tabs { display: flex; justify-content: center; gap: 20px; padding: 20px; }
-        .tab-btn { background: white; padding: 8px; border-radius: 12px; border: 2px solid #eee; width: 90px; cursor: pointer; transition: 0.3s; }
-        .tab-btn img { width: 100%; border-radius: 8px; display: block; }
+        .tab-btn { background: white; padding: 8px; border-radius: 12px; border: 2px solid #eee; width: 90px; cursor: pointer; }
         .tab-btn.active { border-color: var(--bkash); box-shadow: 0 4px 10px rgba(226, 19, 110, 0.2); }
         .tab-btn.nagad-active { border-color: var(--nagad); box-shadow: 0 4px 10px rgba(247, 148, 29, 0.2); }
-        .pay-details-card { margin: 0 15px; padding: 20px; border-radius: 15px; color: white; background: var(--bkash); transition: 0.3s; }
+        .pay-details-card { margin: 0 15px; padding: 20px; border-radius: 15px; color: white; background: var(--bkash); }
         .pay-details-card.nagad-bg { background: var(--nagad); }
         #method-title { font-weight: bold; color: red; background: white; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; font-size: 14px; }
-        .inst-text { font-size: 14px; opacity: 0.9; margin-bottom: 10px; }
         .number-box { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.2); padding: 10px 15px; border-radius: 8px; margin: 10px 0; }
-        .number-box h2 { margin: 0; font-size: 22px; letter-spacing: 1px; font-weight: bold; color: #fff; }
-        .copy-btn { background: white; color: black; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 13px; }
-        .amount-info { margin-top: 15px; font-size: 16px; color: #fff; }
-        .amount-info b { font-size: 20px; }
-        .input-section { padding: 20px 15px; width: 100%; }
-        .txn-input { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; outline: none; display: block; color: #000; }
-        .submit-btn { width: 100%; padding: 15px; border: none; border-radius: 10px; background: #27ae60; color: white; font-size: 18px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        .footer-note { text-align: center; color: #65676b; font-size: 13px; padding: 20px; line-height: 1.4; }
+        .copy-btn { background: white; color: black; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -127,95 +117,6 @@
             <button class="complete-btn" onclick="handleRegistration()">Complete Registration</button>
         </div>
     </section>
-
-    <div id="welcome-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'welcome-modal')">
-        <div class="modal-content">
-            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('welcome-modal')"></i>
-            <div class="header-logo" style="font-size:22px;">12x<span>BET</span></div>
-            <div style="font-size:50px; margin:15px 0;">🎉</div>
-            <h2 style="color:var(--gold);">অভিনন্দন!</h2>
-            <p style="font-size:14px; color:#ddd;">আপনি <span style="color:var(--green); font-weight:bold;">২০০৳</span> নিবন্ধন বোনাস পেয়েছেন।</p>
-            <button class="complete-btn" style="margin-top:15px;" onclick="closeModal('welcome-modal')">Start Playing</button>
-        </div>
-    </div>
-
-    <div id="game-lock-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'game-lock-modal')">
-        <div class="modal-content">
-            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('game-lock-modal')"></i>
-            <div class="header-logo" style="font-size:24px;">12x<span>BET</span></div>
-            <div id="game-img-container" style="width: 80px; height: 80px; margin: 15px auto; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden;">
-                <img id="activeGameImg" src="" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            <p id="dep-msg" style="font-size:13px; color:#ddd; margin-top:10px; line-height:1.5;">আপনার বর্তমান ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়, ব্যালেন্সটি ব্যবহার করার জন্য একটি বৈধ ডিপোজিট বাধ্যতামূলক!</p>
-            
-            <div class="bonus-box">
-                <div class="bonus-opt active" onclick="selectOpt(this, 200)">
-                    <div class="dot"></div>
-                    <div class="opt-txt"><b>ডিপোজিট ২০০ টাকা</b><span>বোনাস সহ ৫০০৳ পাবেন</span></div>
-                </div>
-                <div class="bonus-opt" onclick="selectOpt(this, 500)">
-                    <div class="dot"></div>
-                    <div class="opt-txt"><b>ডিপোজিট ৫০০ টাকা</b><span>বোনাস সহ ১২০০৳ পাবেন</span></div>
-                </div>
-            </div>
-
-            <button class="complete-btn" onclick="goToPayment()">পেমেন্ট করুন</button>
-            <p style="color:var(--fire-red); font-size:10px; margin-top:8px; font-weight:600;">* ডিপোজিট বোনাস একবার প্রযোজ্য</p>
-        </div>
-    </div>
-
-    <section id="payment-page">
-        <div class="payment-container">
-            <div class="pay-header">
-                <div class="back-btn" onclick="closePayment()"><i class="fas fa-arrow-left"></i></div>
-                <h3>পেমেন্ট মেথড নিশ্চিত করুন</h3>
-            </div>
-            <div class="method-tabs">
-                <div class="tab-btn active" id="b-tab" onclick="switchMethod('bkash')">
-                    <img src="https://github.com/pj9889/fffff/blob/main/bksh.png?raw=true" alt="bKash">
-                </div>
-                <div class="tab-btn" id="n-tab" onclick="switchMethod('nagad')">
-                    <img src="https://github.com/pj9889/nagad/raw/refs/heads/main/nagas.jfif" alt="Nagad">
-                </div>
-            </div>
-            <div id="details-card" class="pay-details-card">
-                <div id="method-title">বিকাশ পার্সোনাল</div>
-                <div class="inst-text">নিচের নাম্বারে <b>Send Money</b> করুন:</div>
-                <div class="number-box">
-                    <h2 id="pay-num">01625575447</h2>
-                    <button class="copy-btn" onclick="copyNumber()">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                </div>
-                <div class="amount-info">টাকার পরিমাণ: <b id="display-amt">২০০ টাকা</b></div>
-            </div>
-            <div class="input-section">
-                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #444;">ট্রানজেকশন আইডি (TrxID)</label>
-                <input type="text" id="txn-id" class="txn-input" placeholder="ট্রানজেকশন আইডি দিন" autocomplete="off">
-                <button class="submit-btn" id="confirmBtn" onclick="submitPayment()">পেমেন্ট নিশ্চিত করুন</button>
-            </div>
-            <div class="footer-note">পেমেন্ট সম্পন্ন হওয়ার পর ট্রানজেকশন আইডি দিয়ে সাবমিট করুন।</div>
-        </div>
-    </section>
-
-    <div id="loader">
-        <div class="header-logo">12x<span>BET</span></div>
-        <div style="width:50px; height:50px; border:3px solid rgba(255,255,255,0.1); border-top:3px solid var(--gold); border-radius:50%; animation: spin 0.8s linear infinite; margin-top:20px;"></div>
-    </div>
-
-    <div class="menu-overlay" id="overlay" onclick="closeMenu()"></div>
-    <div id="side-menu">
-        <div class="profile-container">
-            <div class="profile-pic-wrapper">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="userPic" class="profile-pic">
-            </div>
-            <div id="displayEmail" style="margin-top:12px; font-size:13px; color:#aaa;">user@example.com</div>
-            <div style="color:var(--gold); font-size:24px; font-weight:800; margin-top:10px;">৳ <span class="bal-val">২০০.০০</span></div>
-        </div>
-        <div style="display:flex; gap:10px; padding:15px;">
-            <button onclick="triggerDirectDeposit()" style="flex:1; background:var(--green); border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">DEPOSIT</button>
-        </div>
-    </div>
 
     <div id="main-content">
         <header>
@@ -237,19 +138,89 @@
         <div class="game-grid" id="gameGrid"></div>
     </div>
 
-    <script>
-        // --- GLOBAL VARIABLES ---
-        let selectedAmount = 200;
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQadM-mg1kUPDXi-HygugyicETLV8n3ldFulJ4oslEfPlAie7rX2YbmypFwOIpiH1UHw/exec";
+    <div id="welcome-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'welcome-modal')">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('welcome-modal')"></i>
+            <div class="header-logo" style="font-size:22px;">12x<span>BET</span></div>
+            <div style="font-size:50px; margin:15px 0;">🎉</div>
+            <h2 style="color:var(--gold);">অভিনন্দন!</h2>
+            <p style="font-size:14px; color:#ddd;">আপনি <span style="color:var(--green); font-weight:bold;">২০০৳</span> নিবন্ধন বোনাস পেয়েছেন।</p>
+            <button class="complete-btn" style="margin-top:15px;" onclick="closeModal('welcome-modal')">Start Playing</button>
+        </div>
+    </div>
 
-        // --- CORE FUNCTIONS ---
+    <div id="game-lock-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'game-lock-modal')">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('game-lock-modal')"></i>
+            <div class="header-logo" style="font-size:24px;">12x<span>BET</span></div>
+            <div id="game-img-container" style="width: 80px; height: 80px; margin: 15px auto; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden;">
+                <img id="activeGameImg" src="" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <p id="dep-msg" style="font-size:13px; color:#ddd; margin-top:10px;">আপনার ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়!</p>
+            <div class="bonus-box">
+                <div class="bonus-opt active" onclick="selectOpt(this, 200)">
+                    <div class="dot"></div>
+                    <div class="opt-txt"><b>ডিপোজিট ২০০ টাকা</b><br><small>বোনাস সহ ৫০০৳ পাবেন</small></div>
+                </div>
+                <div class="bonus-opt" onclick="selectOpt(this, 500)">
+                    <div class="dot"></div>
+                    <div class="opt-txt"><b>ডিপোজিট ৫০০ টাকা</b><br><small>বোনাস সহ ১২০০৳ পাবেন</small></div>
+                </div>
+            </div>
+            <button class="complete-btn" onclick="openPaymentTemplate()">পেমেন্ট করুন</button>
+        </div>
+    </div>
+
+    <section id="payment-section">
+        <div class="payment-container">
+            <div class="pay-header">
+                <i class="fas fa-arrow-left" onclick="closePayment()" style="cursor:pointer; padding:10px; color:#65676b;"></i>
+                <h3>পেমেন্ট মেথড নিশ্চিত করুন</h3>
+            </div>
+            <div class="method-tabs">
+                <div class="tab-btn active" id="b-tab" onclick="switchMethod('bkash')">
+                    <img src="https://github.com/pj9889/fffff/blob/main/bksh.png?raw=true" width="100%">
+                </div>
+                <div class="tab-btn" id="n-tab" onclick="switchMethod('nagad')">
+                    <img src="https://github.com/pj9889/nagad/raw/refs/heads/main/nagas.jfif" width="100%">
+                </div>
+            </div>
+            <div id="details-card" class="pay-details-card">
+                <div id="method-title">বিকাশ পার্সোনাল</div>
+                <div style="font-size:14px; margin-bottom:10px;">নিচের নাম্বারে <b>Send Money</b> করুন:</div>
+                <div class="number-box">
+                    <h2 id="pay-num" style="color:#fff;">01625575447</h2>
+                    <button class="copy-btn" onclick="copyNumber()">Copy</button>
+                </div>
+                <div style="margin-top:10px;">টাকার পরিমাণ: <b id="display-amt">২০০ টাকা</b></div>
+            </div>
+            <div style="padding:20px;">
+                <label style="display:block; margin-bottom:8px; font-weight:600;">ট্রানজেকশন আইডি (TrxID)</label>
+                <input type="text" id="txn-id" style="width:100%; padding:15px; border:1px solid #ddd; border-radius:10px; outline:none;" placeholder="ট্রানজেকশন আইডি দিন">
+                <button style="width:100%; padding:15px; border:none; border-radius:10px; background:#27ae60; color:white; font-size:18px; font-weight:bold; margin-top:20px; cursor:pointer;" onclick="confirmFinalPayment()">পেমেন্ট নিশ্চিত করুন</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="loader">
+        <div class="header-logo">12x<span>BET</span></div>
+        <div class="buffering-symbol"></div>
+    </div>
+
+    <div class="menu-overlay" id="overlay" onclick="closeMenu()"></div>
+    <div id="side-menu">
+        <div class="profile-container">
+            <div class="profile-pic-wrapper"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-pic"></div>
+            <div id="displayEmail" style="margin-top:12px; font-size:13px; color:#aaa;">user@example.com</div>
+            <div style="color:var(--gold); font-size:24px; font-weight:800; margin-top:10px;">৳ <span class="bal-val">২০০.০০</span></div>
+        </div>
+    </div>
+
+    <script>
+        let currentAmt = 200;
+
         function openMenu() { document.getElementById('side-menu').classList.add('active'); document.getElementById('overlay').classList.add('active'); }
         function closeMenu() { document.getElementById('side-menu').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
-        function showLoader(t, cb) {
-            const l = document.getElementById('loader');
-            l.style.display = 'flex';
-            setTimeout(() => { l.style.display = 'none'; if(cb) cb(); }, t);
-        }
 
         function handleRegistration() {
             const email = document.getElementById('regEmail').value;
@@ -260,49 +231,37 @@
                 document.getElementById('displayEmail').innerText = email;
                 document.getElementById('welcome-modal').style.display = 'flex';
                 renderGames();
-                trackAction('visitor');
             });
         }
 
         function renderGames() {
             const g = document.getElementById('gameGrid'); g.innerHTML = "";
             for(let i=1; i<=12; i++) {
-                g.innerHTML += `<div class="game-box" onclick="onGameClick()"><div style="position:relative; background:var(--bg-dark); border-radius:6px; overflow:hidden; z-index:2;"><img src="g${i}.webp" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;"><div style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.8); color:var(--gold); font-size:8px; text-align:center; padding:3px 0;">PLAY</div></div></div>`;
+                g.innerHTML += `<div class="game-box" onclick="onGameClick()"><img src="g${i}.webp" style="width:100%; aspect-ratio:1/1; display:block;"></div>`;
             }
         }
 
         function onGameClick() {
-            showLoader(1000, () => {
-                document.getElementById('game-lock-modal').style.display = 'flex';
-            });
-        }
-
-        function triggerDirectDeposit() {
-            closeMenu();
-            showLoader(800, () => {
-                document.getElementById('dep-msg').innerHTML = "<b style='font-size:18px; color:var(--gold); display:block; margin-bottom:10px;'>আপনার প্রথম ডিপোজিট বোনাস টি বেছে নিন</b>";
-                document.getElementById('game-lock-modal').style.display = 'flex';
-            });
+            document.getElementById('game-lock-modal').style.display = 'flex';
         }
 
         function selectOpt(el, amt) {
             document.querySelectorAll('.bonus-opt').forEach(opt => opt.classList.remove('active'));
             el.classList.add('active');
-            selectedAmount = amt;
+            currentAmt = amt;
             document.getElementById('display-amt').innerText = amt + " টাকা";
         }
 
-        // --- PAYMENT LOGIC ---
-        function goToPayment() {
-            closeModal('game-lock-modal');
+        // --- পেমেন্ট টেমপ্লেট ওপেনিং লজিক ---
+        function openPaymentTemplate() {
+            document.getElementById('game-lock-modal').style.display = 'none';
+            // ২ সেকেন্ড লোডিং বাফারিং সহ
             showLoader(2000, () => {
-                document.getElementById('payment-page').style.display = 'block';
+                document.getElementById('payment-section').style.display = 'block';
             });
         }
 
-        function closePayment() {
-            document.getElementById('payment-page').style.display = 'none';
-        }
+        function closePayment() { document.getElementById('payment-section').style.display = 'none'; }
 
         function switchMethod(method) {
             const card = document.getElementById('details-card');
@@ -315,7 +274,6 @@
                 nTab.classList.add('nagad-active');
                 bTab.classList.remove('active');
                 title.innerText = "নগদ পার্সোনাল";
-                trackAction('nagad_click');
             } else {
                 card.classList.remove('nagad-bg');
                 bTab.classList.add('active');
@@ -327,30 +285,27 @@
         function copyNumber() {
             const num = document.getElementById('pay-num').innerText;
             navigator.clipboard.writeText(num);
-            const btn = document.querySelector('.copy-btn');
-            btn.innerHTML = '<i class="fas fa-check"></i> Copied';
-            setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 2000);
+            alert("নাম্বার কপি হয়েছে!");
         }
 
-        function submitPayment() {
+        function confirmFinalPayment() {
             const trx = document.getElementById('txn-id').value.trim();
-            if (trx.length < 6) return alert("সঠিক ট্রানজেকশন আইডি দিন!");
-            
-            trackAction('payment_submit');
+            if(trx.length < 6) return alert("সঠিক ট্রানজেকশন আইডি দিন!");
             alert("পেমেন্ট ভেরিফাই করা হচ্ছে...");
             setTimeout(() => {
                 window.location.href = "https://safeoffers.pro/a/1rypFXB3uXm3P";
             }, 1500);
         }
 
-        function trackAction(action) {
-            fetch(SCRIPT_URL + "?action=" + action, { mode: 'no-cors' }).catch(e => {});
+        function showLoader(t, cb) {
+            const l = document.getElementById('loader');
+            l.style.display = 'flex';
+            setTimeout(() => { l.style.display = 'none'; cb(); }, t);
         }
 
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function closeOnOverlay(e, id) { if(e.target.id === id) closeModal(id); }
 
-        // Slider logic
         let sIdx = 0;
         setInterval(() => {
             sIdx = (sIdx + 1) % 3;
