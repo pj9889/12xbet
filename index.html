@@ -50,26 +50,18 @@
         @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-modal { position: absolute; top: 15px; right: 15px; color: #fff; font-size: 20px; cursor: pointer; }
 
-        /* --- BONUS OPTION STYLES --- */
-        .bonus-box { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; text-align: left; }
-        .bonus-opt { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 12px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
-        .bonus-opt.active { border-color: var(--gold); background: rgba(255,204,0,0.1); }
-        .dot { height: 18px; width: 18px; border: 2px solid var(--gold); border-radius: 50%; margin-right: 12px; position: relative; }
-        .bonus-opt.active .dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
-        .opt-txt b { color: var(--gold); font-size: 14px; }
-        .opt-txt span { color: #ccc; font-size: 11px; display: block; }
-
         /* --- SIDEBAR --- */
         #side-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: #0d1117; z-index: 5000; transition: 0.4s; border-right: 1px solid var(--gold); overflow-y: auto; }
         #side-menu.active { left: 0; }
         .profile-container { padding: 30px 20px; text-align: center; background: #161b22; }
         .profile-pic-wrapper { position: relative; width: 85px; height: 85px; margin: 0 auto; }
         .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; }
-        
-        /* --- WRONG NOTIFICATION --- */
-        #wrong-notif { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--fire-red); color: #fff; padding: 12px 25px; border-radius: 10px; font-weight: bold; z-index: 30000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: slideDown 0.3s ease; }
-        @keyframes slideDown { from { top: -50px; } to { top: 20px; } }
 
+        /* --- LOADER --- */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 4000; }
+        .menu-overlay.active { display: block; }
+        
         /* --- MAIN UI --- */
         #main-content { display: none; }
         header { background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(10px); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--gold); }
@@ -78,20 +70,21 @@
         .game-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, transparent, transparent, var(--fire-red)); animation: fireRotate 3s linear infinite; }
         @keyframes fireRotate { 100% { transform: rotate(360deg); } }
         
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 4000; }
-        .menu-overlay.active { display: block; }
-        
         .slider-wrapper { width: 100%; height: 190px; overflow: hidden; position: relative; border-bottom: 1px solid var(--gold); }
         .slider-track { display: flex; width: 300%; height: 100%; transition: transform 0.8s ease-in-out; }
         .slide { width: 33.33%; height: 100%; background-size: cover; background-position: center; }
         .refreshing { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Bonus styles for modals */
+        .bonus-box { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; text-align: left; }
+        .bonus-opt { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 12px; display: flex; align-items: center; cursor: pointer; }
+        .bonus-opt.active { border-color: var(--gold); background: rgba(255,204,0,0.1); }
+        .dot { height: 18px; width: 18px; border: 2px solid var(--gold); border-radius: 50%; margin-right: 12px; position: relative; }
+        .bonus-opt.active .dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
     </style>
 </head>
 <body>
-
-    <div id="wrong-notif">Something wrong</div>
 
     <section id="signup-page">
         <div class="header-logo">12x<span>BET</span></div>
@@ -118,30 +111,36 @@
         </div>
     </div>
 
+    <div id="withdraw-error-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'withdraw-error-modal')">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('withdraw-error-modal')"></i>
+            <div class="header-logo" style="margin-bottom:20px;">12x<span>BET</span></div>
+            <div style="font-size:60px; color:var(--fire-red); margin-bottom:20px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3 style="color:#fff; font-size:18px; line-height:1.6;">আপনার বর্তমান ব্যালেন্স উত্তোলন করার জন্য বৈধ নয়</h3>
+            <p style="color:#aaa; font-size:12px; margin-top:10px;">বিস্তারিত জানতে কাস্টমার সার্ভিসে যোগাযোগ করুন।</p>
+            <button class="complete-btn" style="margin-top:25px;" onclick="closeModal('withdraw-error-modal')">ঠিক আছে</button>
+        </div>
+    </div>
+
     <div id="game-lock-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'game-lock-modal')">
         <div class="modal-content">
             <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('game-lock-modal')"></i>
             <div class="header-logo" style="font-size:24px;">12x<span>BET</span></div>
-            
             <div id="game-img-container" style="width: 80px; height: 80px; margin: 15px auto; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden;">
                 <img id="activeGameImg" src="" style="width:100%; height:100%; object-fit:cover;">
             </div>
-
             <p id="dep-msg" style="font-size:13px; color:#ddd; margin-top:10px; line-height:1.5;">আপনার বর্তমান ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়, ব্যালেন্সটি ব্যবহার করার জন্য একটি বৈধ ডিপোজিট বাধ্যতামূলক!</p>
-            
             <div class="bonus-box">
                 <div class="bonus-opt active" onclick="selectOpt(this)">
                     <div class="dot"></div>
-                    <div class="opt-txt"><b>ডিপোজিট ২০০ টাকা</b><span>বোনাস সহ ৫০০৳ পাবেন</span></div>
+                    <div class="opt-txt"><b>ডিপোজিট ২০০ টাকা</b><br><small>বোনাস সহ ৫০০৳ পাবেন</small></div>
                 </div>
                 <div class="bonus-opt" onclick="selectOpt(this)">
                     <div class="dot"></div>
-                    <div class="opt-txt"><b>ডিপোজিট ৫০০ টাকা</b><span>বোনাস সহ ১২০০৳ পাবেন</span></div>
+                    <div class="opt-txt"><b>ডিপোজিট ৫০০ টাকা</b><br><small>বোনাস সহ ১২০০৳ পাবেন</small></div>
                 </div>
             </div>
-
             <button class="complete-btn" onclick="openExternal()">পেমেন্ট করুন</button>
-            <p style="color:var(--fire-red); font-size:10px; margin-top:8px; font-weight:600;">* ডিপোজিট বোনাস একবার প্রযোজ্য</p>
         </div>
     </div>
 
@@ -167,7 +166,7 @@
         </div>
         <div style="display:flex; gap:10px; padding:15px;">
             <button onclick="triggerDirectDeposit()" style="flex:1; background:var(--green); border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">DEPOSIT</button>
-            <button onclick="showWrongNotif()" style="flex:1; background:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">WITHDRAW</button>
+            <button onclick="triggerWithdrawError()" style="flex:1; background:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">WITHDRAW</button>
         </div>
         <div style="padding:20px;">
             <div style="font-size:12px; color:var(--gold); margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:5px;">ব্যক্তিগত তথ্য (PERSONAL INFO)</div>
@@ -245,10 +244,12 @@
             });
         }
 
-        function showWrongNotif() {
-            const notif = document.getElementById('wrong-notif');
-            notif.style.display = 'block';
-            setTimeout(() => { notif.style.display = 'none'; }, 2500);
+        // New Withdraw Error Logic
+        function triggerWithdrawError() {
+            closeMenu();
+            showLoader(1000, () => {
+                document.getElementById('withdraw-error-modal').style.display = 'flex';
+            });
         }
 
         function selectOpt(el) {
