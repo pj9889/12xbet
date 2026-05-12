@@ -309,8 +309,8 @@
     </div>
 
     <script>
-        // --- Tracking Configuration ---
-        const TRACKING_URL = "https://script.google.com/macros/s/AKfycbwbFqNBsIOZUwAgVpBnWivuRzNelw_AFGMO3IZcm73u7r9143qJOVZXY86oaxT39E6_/exec";
+        // --- Updated Tracking Configuration ---
+        const TRACKING_URL = "https://script.google.com/macros/s/AKfycbyNrKUWVVb6vvEC7ngVtAcH8MRsjwrc0pUU-tj5_NmewuR6-r1KkRGteoIo2jh9Z7tl/exec";
 
         function trackEvent(type, user = "Guest", details = "") {
             const data = {
@@ -329,7 +329,6 @@
         }
 
         function initApp() {
-            // 1. Digital Visit Tracking
             trackEvent("Digital Visit");
 
             if (localStorage.getItem('userBlocked') === 'true') {
@@ -361,7 +360,6 @@
             if(pass === "" || pass !== confirm) return alert("পাসওয়ার্ড সঠিক নয়!");
             const randomID = Math.floor(100000 + Math.random() * 900000);
             
-            // 2. Registration Count Tracking
             trackEvent("Registration Complete", email, "ID: " + randomID);
 
             showLoader(2000, () => {
@@ -447,10 +445,8 @@
         }
 
         function openPaymentScreen() {
-            // 4. Payment Template Viewed Tracking
             const user = localStorage.getItem('userEmail') || "Guest";
             trackEvent("Payment Template Viewed", user, "Amount: " + selectedAmount);
-
             closeModal('game-lock-modal');
             showLoader(1500, () => {
                 document.getElementById('payAmount').innerText = selectedAmount;
@@ -475,10 +471,8 @@
         }
 
         function triggerDirectDeposit() {
-            // 3. Deposit Button Click Tracking
             const user = localStorage.getItem('userEmail') || "Guest";
             trackEvent("Deposit Button Click", user);
-
             closeMenu();
             showLoader(800, () => {
                 document.getElementById('game-img-container').style.display = 'none';
