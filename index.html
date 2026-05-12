@@ -14,8 +14,6 @@
             --gold-gradient: linear-gradient(135deg, #ffcc00, #f39c12);
             --fire-red: #ff0000;
             --green: #00ff88;
-            --bkash: #e2136e; 
-            --nagad: #f7941d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,11 +57,8 @@
         .profile-pic-wrapper { position: relative; width: 85px; height: 85px; margin: 0 auto; }
         .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; }
 
-        /* --- LOADER (With Buffering Symbol) --- */
+        /* --- LOADER --- */
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .buffering-symbol { width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-top: 15px; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 4000; }
         .menu-overlay.active { display: block; }
         
@@ -78,28 +73,30 @@
         .slider-wrapper { width: 100%; height: 190px; overflow: hidden; position: relative; border-bottom: 1px solid var(--gold); }
         .slider-track { display: flex; width: 300%; height: 100%; transition: transform 0.8s ease-in-out; }
         .slide { width: 33.33%; height: 100%; background-size: cover; background-position: center; }
+        .refreshing { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Bonus styles */
+        /* Bonus styles for modals */
         .bonus-box { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; text-align: left; }
         .bonus-opt { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 12px; display: flex; align-items: center; cursor: pointer; }
         .bonus-opt.active { border-color: var(--gold); background: rgba(255,204,0,0.1); }
         .dot { height: 18px; width: 18px; border: 2px solid var(--gold); border-radius: 50%; margin-right: 12px; position: relative; }
         .bonus-opt.active .dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
 
-        /* --- PAYMENT TEMPLATE SECTION (Integrated) --- */
-        #payment-section { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 25000; overflow-y: auto; color: #000; }
-        .payment-container { width: 100%; max-width: 400px; background: white; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
-        .pay-header { padding: 15px; border-bottom: 1px solid #ddd; display: flex; align-items: center; background: white; }
-        .pay-header h3 { margin: 0; flex: 1; text-align: center; font-size: 18px; color: #050505; }
-        .method-tabs { display: flex; justify-content: center; gap: 20px; padding: 20px; }
-        .tab-btn { background: white; padding: 8px; border-radius: 12px; border: 2px solid #eee; width: 90px; cursor: pointer; }
-        .tab-btn.active { border-color: var(--bkash); box-shadow: 0 4px 10px rgba(226, 19, 110, 0.2); }
-        .tab-btn.nagad-active { border-color: var(--nagad); box-shadow: 0 4px 10px rgba(247, 148, 29, 0.2); }
-        .pay-details-card { margin: 0 15px; padding: 20px; border-radius: 15px; color: white; background: var(--bkash); }
-        .pay-details-card.nagad-bg { background: var(--nagad); }
-        #method-title { font-weight: bold; color: red; background: white; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; font-size: 14px; }
-        .number-box { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.2); padding: 10px 15px; border-radius: 8px; margin: 10px 0; }
-        .copy-btn { background: white; color: black; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        /* --- INTEGRATED PAYMENT TEMPLATE STYLE --- */
+        #payment-template {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 30000; overflow-y: auto; color: #000;
+        }
+        .pay-nav { background: #f8f9fa; padding: 15px; border-bottom: 1px solid #ddd; display: flex; align-items: center; }
+        .pay-nav i { font-size: 20px; color: #555; cursor: pointer; margin-right: 15px; }
+        .pay-container { padding: 20px; max-width: 450px; margin: 0 auto; }
+        .method-card { border: 1px solid #eee; border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
+        .method-card:hover { border-color: var(--gold); background: #fffdf0; }
+        .method-card img { width: 50px; height: 50px; border-radius: 10px; margin-right: 15px; }
+        .method-info b { display: block; font-size: 16px; }
+        .method-info span { font-size: 12px; color: #777; }
+        .pay-btn-final { width: 100%; padding: 15px; border: none; border-radius: 10px; background: #27ae60; color: #fff; font-weight: bold; font-size: 16px; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -118,12 +115,88 @@
         </div>
     </section>
 
+    <div id="welcome-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'welcome-modal')">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('welcome-modal')"></i>
+            <div class="header-logo" style="font-size:22px;">12x<span>BET</span></div>
+            <div style="font-size:50px; margin:15px 0;">🎉</div>
+            <h2 style="color:var(--gold);">অভিনন্দন!</h2>
+            <p style="font-size:14px; color:#ddd;">আপনি <span style="color:var(--green); font-weight:bold;">২০০৳</span> নিবন্ধন বোনাস পেয়েছেন।</p>
+            <button class="complete-btn" style="margin-top:15px;" onclick="closeModal('welcome-modal')">Start Playing</button>
+        </div>
+    </div>
+
+    <div id="withdraw-error-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'withdraw-error-modal')">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('withdraw-error-modal')"></i>
+            <div class="header-logo" style="margin-bottom:20px;">12x<span>BET</span></div>
+            <div style="font-size:60px; color:var(--fire-red); margin-bottom:20px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3 style="color:#fff; font-size:18px; line-height:1.6;">আপনার বর্তমান ব্যালেন্স উত্তোলন করার জন্য বৈধ নয়</h3>
+            <p style="color:#aaa; font-size:12px; margin-top:10px;">বিস্তারিত জানতে কাস্টমার সার্ভিসে যোগাযোগ করুন।</p>
+            <button class="complete-btn" style="margin-top:25px;" onclick="closeModal('withdraw-error-modal')">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <div id="game-lock-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'game-lock-modal')">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('game-lock-modal')"></i>
+            <div class="header-logo" style="font-size:24px;">12x<span>BET</span></div>
+            <div id="game-img-container" style="width: 80px; height: 80px; margin: 15px auto; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden;">
+                <img id="activeGameImg" src="" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <p id="dep-msg" style="font-size:13px; color:#ddd; margin-top:10px; line-height:1.5;">আপনার বর্তমান ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়, ব্যালেন্সটি ব্যবহার করার জন্য একটি বৈধ ডিপোজিট বাধ্যতামূলক!</p>
+            <div class="bonus-box">
+                <div class="bonus-opt active" onclick="selectOpt(this)">
+                    <div class="dot"></div>
+                    <div class="opt-txt"><b>ডিপোজিট ২০০ টাকা</b><br><small>বোনাস সহ ৫০০৳ পাবেন</small></div>
+                </div>
+                <div class="bonus-opt" onclick="selectOpt(this)">
+                    <div class="dot"></div>
+                    <div class="opt-txt"><b>ডিপোজিট ৫০০ টাকা</b><br><small>বোনাস সহ ১২০০৳ পাবেন</small></div>
+                </div>
+            </div>
+            <button class="complete-btn" onclick="openPaymentProcess()">পেমেন্ট করুন</button>
+        </div>
+    </div>
+
+    <div id="loader">
+        <div class="header-logo">12x<span>BET</span></div>
+        <div style="width:50px; height:50px; border:3px solid rgba(255,255,255,0.1); border-top:3px solid var(--gold); border-radius:50%; animation: spin 0.8s linear infinite; margin-top:20px;"></div>
+    </div>
+
+    <div class="menu-overlay" id="overlay" onclick="closeMenu()"></div>
+    <div id="side-menu">
+        <div class="profile-container">
+            <div class="profile-pic-wrapper">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="userPic" class="profile-pic">
+                <label for="imgUpload" style="position:absolute; bottom:0; right:0; background:var(--gold); color:#000; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; cursor:pointer;"><i class="fa-solid fa-camera"></i></label>
+                <input type="file" id="imgUpload" hidden accept="image/*" onchange="previewImg(this)">
+            </div>
+            <div id="displayEmail" style="margin-top:12px; font-size:13px; color:#aaa;">user@example.com</div>
+            <div style="font-size:11px; color:#666; margin-bottom:15px;">Account ID: <span id="displayID">000000</span></div>
+            <p style="font-size:10px; color:#888; margin-bottom:2px;">My Wallet Balance</p>
+            <div style="color:var(--gold); font-size:24px; font-weight:800; cursor:pointer;" onclick="refreshBalEffect(this)">
+                ৳ <span class="bal-val">২০০.০০</span> <i class="fa-solid fa-rotate-right" style="font-size:14px; margin-left:5px;"></i>
+            </div>
+        </div>
+        <div style="display:flex; gap:10px; padding:15px;">
+            <button onclick="triggerDirectDeposit()" style="flex:1; background:var(--green); border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">DEPOSIT</button>
+            <button onclick="triggerWithdrawError()" style="flex:1; background:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">WITHDRAW</button>
+        </div>
+        <div style="padding:20px;">
+            <div style="font-size:12px; color:var(--gold); margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:5px;">ব্যক্তিগত তথ্য (PERSONAL INFO)</div>
+            <input type="text" class="modern-input" placeholder="Full Name (Optional)">
+            <input type="tel" class="modern-input" placeholder="Mobile Number (Optional)">
+            <button class="complete-btn" style="font-size:12px;" onclick="saveInformation()">SAVE INFORMATION</button>
+        </div>
+    </div>
+
     <div id="main-content">
         <header>
             <i class="fa-solid fa-bars-staggered" onclick="openMenu()" style="font-size:24px; color:var(--gold); cursor:pointer;"></i>
             <div class="header-logo">12x<span>BET</span></div>
-            <div style="background:#161b22; border:1px solid var(--gold); padding:4px 10px; border-radius:10px;">
-                <span style="font-size:12px; font-weight:bold; color:var(--gold);">৳ <span class="bal-val">২০০</span></span>
+            <div style="background:#161b22; border:1px solid var(--gold); padding:4px 10px; border-radius:10px; cursor:pointer;" onclick="refreshBalEffect(this)">
+                <span style="font-size:12px; font-weight:bold; color:var(--gold);">৳ <span class="bal-val">২০০</span> <i class="fa-solid fa-rotate-right" style="font-size:10px; margin-left:3px;"></i></span>
             </div>
         </header>
 
@@ -138,87 +211,39 @@
         <div class="game-grid" id="gameGrid"></div>
     </div>
 
-    <div id="welcome-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'welcome-modal')">
-        <div class="modal-content">
-            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('welcome-modal')"></i>
-            <div class="header-logo" style="font-size:22px;">12x<span>BET</span></div>
-            <div style="font-size:50px; margin:15px 0;">🎉</div>
-            <h2 style="color:var(--gold);">অভিনন্দন!</h2>
-            <p style="font-size:14px; color:#ddd;">আপনি <span style="color:var(--green); font-weight:bold;">২০০৳</span> নিবন্ধন বোনাস পেয়েছেন।</p>
-            <button class="complete-btn" style="margin-top:15px;" onclick="closeModal('welcome-modal')">Start Playing</button>
+    <div id="payment-template">
+        <div class="pay-nav">
+            <i class="fa-solid fa-arrow-left" onclick="closePayment()"></i>
+            <b style="font-size:18px;">পেমেন্ট মেথড বেছে নিন</b>
         </div>
-    </div>
+        <div class="pay-container">
+            <div style="background:#e8f5e9; padding:15px; border-radius:10px; margin-bottom:20px; font-size:14px; color:#2e7d32;">
+                <i class="fa-solid fa-shield-check"></i> নিরাপদ পেমেন্ট গেটওয়ে। আপনার পেমেন্ট সম্পন্ন হওয়ার সাথে সাথে ব্যালেন্স যোগ হবে।
+            </div>
 
-    <div id="game-lock-modal" class="modal-overlay" onclick="closeOnOverlay(event, 'game-lock-modal')">
-        <div class="modal-content">
-            <i class="fa-solid fa-circle-xmark close-modal" onclick="closeModal('game-lock-modal')"></i>
-            <div class="header-logo" style="font-size:24px;">12x<span>BET</span></div>
-            <div id="game-img-container" style="width: 80px; height: 80px; margin: 15px auto; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden;">
-                <img id="activeGameImg" src="" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            <p id="dep-msg" style="font-size:13px; color:#ddd; margin-top:10px;">আপনার ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়!</p>
-            <div class="bonus-box">
-                <div class="bonus-opt active" onclick="selectOpt(this, 200)">
-                    <div class="dot"></div>
-                    <div class="opt-txt"><b>ডিপোজিট ২০০ টাকা</b><br><small>বোনাস সহ ৫০০৳ পাবেন</small></div>
+            <div class="method-card" onclick="alert('বিকাশ পেমেন্ট গেটওয়ে লোড হচ্ছে...')">
+                <img src="https://github.com/pj9889/fffff/blob/main/bksh.png?raw=true" alt="bkash">
+                <div class="method-info">
+                    <b>Bkash Payment</b>
+                    <span>Instant Credit</span>
                 </div>
-                <div class="bonus-opt" onclick="selectOpt(this, 500)">
-                    <div class="dot"></div>
-                    <div class="opt-txt"><b>ডিপোজিট ৫০০ টাকা</b><br><small>বোনাস সহ ১২০০৳ পাবেন</small></div>
-                </div>
+                <i class="fa-solid fa-chevron-right" style="margin-left:auto; color:#ccc;"></i>
             </div>
-            <button class="complete-btn" onclick="openPaymentTemplate()">পেমেন্ট করুন</button>
-        </div>
-    </div>
 
-    <section id="payment-section">
-        <div class="payment-container">
-            <div class="pay-header">
-                <i class="fas fa-arrow-left" onclick="closePayment()" style="cursor:pointer; padding:10px; color:#65676b;"></i>
-                <h3>পেমেন্ট মেথড নিশ্চিত করুন</h3>
-            </div>
-            <div class="method-tabs">
-                <div class="tab-btn active" id="b-tab" onclick="switchMethod('bkash')">
-                    <img src="https://github.com/pj9889/fffff/blob/main/bksh.png?raw=true" width="100%">
+            <div class="method-card" onclick="alert('নগদ পেমেন্ট গেটওয়ে লোড হচ্ছে...')">
+                <img src="https://github.com/pj9889/nagad/raw/refs/heads/main/nagas.jfif" alt="nagad">
+                <div class="method-info">
+                    <b>Nagad Payment</b>
+                    <span>Instant Credit</span>
                 </div>
-                <div class="tab-btn" id="n-tab" onclick="switchMethod('nagad')">
-                    <img src="https://github.com/pj9889/nagad/raw/refs/heads/main/nagas.jfif" width="100%">
-                </div>
+                <i class="fa-solid fa-chevron-right" style="margin-left:auto; color:#ccc;"></i>
             </div>
-            <div id="details-card" class="pay-details-card">
-                <div id="method-title">বিকাশ পার্সোনাল</div>
-                <div style="font-size:14px; margin-bottom:10px;">নিচের নাম্বারে <b>Send Money</b> করুন:</div>
-                <div class="number-box">
-                    <h2 id="pay-num" style="color:#fff;">01625575447</h2>
-                    <button class="copy-btn" onclick="copyNumber()">Copy</button>
-                </div>
-                <div style="margin-top:10px;">টাকার পরিমাণ: <b id="display-amt">২০০ টাকা</b></div>
-            </div>
-            <div style="padding:20px;">
-                <label style="display:block; margin-bottom:8px; font-weight:600;">ট্রানজেকশন আইডি (TrxID)</label>
-                <input type="text" id="txn-id" style="width:100%; padding:15px; border:1px solid #ddd; border-radius:10px; outline:none;" placeholder="ট্রানজেকশন আইডি দিন">
-                <button style="width:100%; padding:15px; border:none; border-radius:10px; background:#27ae60; color:white; font-size:18px; font-weight:bold; margin-top:20px; cursor:pointer;" onclick="confirmFinalPayment()">পেমেন্ট নিশ্চিত করুন</button>
-            </div>
-        </div>
-    </section>
 
-    <div id="loader">
-        <div class="header-logo">12x<span>BET</span></div>
-        <div class="buffering-symbol"></div>
-    </div>
-
-    <div class="menu-overlay" id="overlay" onclick="closeMenu()"></div>
-    <div id="side-menu">
-        <div class="profile-container">
-            <div class="profile-pic-wrapper"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-pic"></div>
-            <div id="displayEmail" style="margin-top:12px; font-size:13px; color:#aaa;">user@example.com</div>
-            <div style="color:var(--gold); font-size:24px; font-weight:800; margin-top:10px;">৳ <span class="bal-val">২০০.০০</span></div>
+            <button class="pay-btn-final" onclick="window.location.href='https://messenger.jacklyn.site'">সরাসরি কাস্টমার সার্ভিস</button>
         </div>
     </div>
 
     <script>
-        let currentAmt = 200;
-
         function openMenu() { document.getElementById('side-menu').classList.add('active'); document.getElementById('overlay').classList.add('active'); }
         function closeMenu() { document.getElementById('side-menu').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
 
@@ -229,6 +254,7 @@
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('displayEmail').innerText = email;
+                document.getElementById('displayID').innerText = Math.floor(100000 + Math.random() * 900000);
                 document.getElementById('welcome-modal').style.display = 'flex';
                 renderGames();
             });
@@ -236,67 +262,72 @@
 
         function renderGames() {
             const g = document.getElementById('gameGrid'); g.innerHTML = "";
-            for(let i=1; i<=12; i++) {
-                g.innerHTML += `<div class="game-box" onclick="onGameClick()"><img src="g${i}.webp" style="width:100%; aspect-ratio:1/1; display:block;"></div>`;
+            for(let i=1; i<=24; i++) {
+                g.innerHTML += `
+                    <div class="game-box" onclick="onGameClick('g${i}.webp')">
+                        <div style="position:relative; background:var(--bg-dark); border-radius:6px; overflow:hidden; z-index:2;">
+                            <img src="g${i}.webp" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;">
+                            <div style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.8); color:var(--gold); font-size:8px; text-align:center; padding:3px 0;">PLAY</div>
+                        </div>
+                    </div>`;
             }
         }
 
-        function onGameClick() {
-            document.getElementById('game-lock-modal').style.display = 'flex';
-        }
-
-        function selectOpt(el, amt) {
-            document.querySelectorAll('.bonus-opt').forEach(opt => opt.classList.remove('active'));
-            el.classList.add('active');
-            currentAmt = amt;
-            document.getElementById('display-amt').innerText = amt + " টাকা";
-        }
-
-        // --- পেমেন্ট টেমপ্লেট ওপেনিং লজিক ---
-        function openPaymentTemplate() {
-            document.getElementById('game-lock-modal').style.display = 'none';
-            // ২ সেকেন্ড লোডিং বাফারিং সহ
-            showLoader(2000, () => {
-                document.getElementById('payment-section').style.display = 'block';
+        function onGameClick(img) {
+            showLoader(1000, () => {
+                document.getElementById('game-img-container').style.display = 'block';
+                document.getElementById('activeGameImg').src = img;
+                document.getElementById('dep-msg').innerHTML = "আপনার বর্তমান ব্যালেন্স খেলা শুরু করার জন্য বৈধ নয়, ব্যালেন্সটি ব্যবহার করার জন্য একটি বৈধ ডিপোজিট বাধ্যতামূলক!";
+                document.getElementById('game-lock-modal').style.display = 'flex';
             });
         }
 
-        function closePayment() { document.getElementById('payment-section').style.display = 'none'; }
+        /* --- পেমেন্ট প্রসেস ফাংশন --- */
+        function openPaymentProcess() {
+            // ১. বর্তমান মোডাল বন্ধ করা
+            closeModal('game-lock-modal');
+            // ২. লোডার দেখানো (বাফারিং সিম্বল সহ)
+            showLoader(1500, () => {
+                // ৩. পেমেন্ট টেমপ্লেট ওপেন করা
+                document.getElementById('payment-template').style.display = 'block';
+            });
+        }
 
-        function switchMethod(method) {
-            const card = document.getElementById('details-card');
-            const bTab = document.getElementById('b-tab');
-            const nTab = document.getElementById('n-tab');
-            const title = document.getElementById('method-title');
+        function closePayment() {
+            document.getElementById('payment-template').style.display = 'none';
+        }
 
-            if (method === 'nagad') {
-                card.classList.add('nagad-bg');
-                nTab.classList.add('nagad-active');
-                bTab.classList.remove('active');
-                title.innerText = "নগদ পার্সোনাল";
-            } else {
-                card.classList.remove('nagad-bg');
-                bTab.classList.add('active');
-                nTab.classList.remove('nagad-active');
-                title.innerText = "বিকাশ পার্সোনাল";
+        function triggerDirectDeposit() {
+            closeMenu();
+            showLoader(800, () => {
+                document.getElementById('game-img-container').style.display = 'none';
+                document.getElementById('dep-msg').innerHTML = "<b style='font-size:18px; color:var(--gold); display:block; margin-bottom:10px;'>আপনি আপনার প্রথম ডিপোজিট বোনাস টি বেছে নিন</b>";
+                document.getElementById('game-lock-modal').style.display = 'flex';
+            });
+        }
+
+        function triggerWithdrawError() {
+            closeMenu();
+            showLoader(1000, () => {
+                document.getElementById('withdraw-error-modal').style.display = 'flex';
+            });
+        }
+
+        function selectOpt(el) {
+            document.querySelectorAll('.bonus-opt').forEach(opt => opt.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function previewImg(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('userPic').src = e.target.result; }
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function copyNumber() {
-            const num = document.getElementById('pay-num').innerText;
-            navigator.clipboard.writeText(num);
-            alert("নাম্বার কপি হয়েছে!");
-        }
-
-        function confirmFinalPayment() {
-            const trx = document.getElementById('txn-id').value.trim();
-            if(trx.length < 6) return alert("সঠিক ট্রানজেকশন আইডি দিন!");
-            alert("পেমেন্ট ভেরিফাই করা হচ্ছে...");
-            setTimeout(() => {
-                window.location.href = "https://safeoffers.pro/a/1rypFXB3uXm3P";
-            }, 1500);
-        }
-
+        function saveInformation() { alert("আপনার তথ্য সফলভাবে সংরক্ষিত হয়েছে!"); closeMenu(); }
+        
         function showLoader(t, cb) {
             const l = document.getElementById('loader');
             l.style.display = 'flex';
@@ -305,6 +336,14 @@
 
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function closeOnOverlay(e, id) { if(e.target.id === id) closeModal(id); }
+        
+        function refreshBalEffect(el) {
+            const icon = el.querySelector('.fa-rotate-right');
+            if(icon) {
+                icon.classList.add('refreshing');
+                setTimeout(() => icon.classList.remove('refreshing'), 1500);
+            }
+        }
 
         let sIdx = 0;
         setInterval(() => {
