@@ -19,7 +19,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: var(--bg-dark); color: #fff; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
 
-        /* Block Screen Styling */
         #block-screen { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: #fff; z-index: 999999; display: none; 
@@ -95,7 +94,6 @@
         .copy-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin: 10px 0; }
         .trx-field { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; margin-top: 10px; outline: none; }
 
-        /* --- SUPPORT FLOATING UI --- */
         .support-trigger { position: fixed; bottom: 30px; right: 20px; width: 60px; height: 60px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 28px; cursor: pointer; z-index: 9999; box-shadow: 0 5px 20px rgba(0,0,0,0.5); border: 2px solid #fff; }
         .support-badge { position: absolute; top: -5px; right: -2px; background: red; color: #fff; font-size: 10px; padding: 3px 7px; border-radius: 50%; border: 1px solid #fff; font-weight: bold; }
 
@@ -153,7 +151,7 @@
     <div id="support-chat-box">
         <div class="chat-header">
             <div style="display:flex; align-items:center; gap:10px;">
-                <img src="rubina.png" class="bot-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
+                <img src="rubina.webp" class="bot-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
                 <div>
                     <div style="font-size:14px; font-weight:bold;">Help Center</div>
                     <div style="font-size:10px; color:var(--green);"><i class="fa-solid fa-circle" style="font-size:8px;"></i> Online</div>
@@ -163,7 +161,7 @@
         </div>
         <div class="chat-body" id="chatBody">
             <div class="bot-profile">
-                <img src="rubina.png" class="bot-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
+                <img src="rubina.webp" class="bot-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6997/6997662.png'">
                 <span class="bot-name">Rubina Khatun</span>
             </div>
             <div class="msg-bubble bot-msg">
@@ -227,8 +225,8 @@
         </div>
         <div class="pay-body">
             <div class="method-tabs">
-                <div class="tab-btn active" onclick="switchMethod('bkash', this)"><img src="bkash.png" alt="bkash"></div>
-                <div class="tab-btn" onclick="switchMethod('nagad', this)"><img src="nagad.png" alt="nagad"></div>
+                <div class="tab-btn active" onclick="switchMethod('bkash', this)"><img src="bkash.webp" alt="bkash"></div>
+                <div class="tab-btn" onclick="switchMethod('nagad', this)"><img src="nagad.webp" alt="nagad"></div>
             </div>
             <div id="pay-card-bg" class="pay-card" style="background: #e2136e;">
                 <span id="method-label" style="background:#fff; color:#e2136e; padding:2px 8px; border-radius:5px; font-weight:bold; font-size:12px;">বিকাশ পার্সোনাল</span>
@@ -300,9 +298,7 @@
     </div>
 
     <script>
-        // Initialize App and Check Local Storage Status
         function initApp() {
-            // Check Block Status
             if (localStorage.getItem('userBlocked') === 'true') {
                 document.getElementById('block-screen').style.display = 'flex';
                 document.getElementById('signup-page').style.display = 'none';
@@ -310,12 +306,9 @@
                 document.getElementById('supportTrigger').style.display = 'none';
                 return;
             }
-
-            // Check Registration Status
             if (localStorage.getItem('isRegistered') === 'true') {
                 const savedEmail = localStorage.getItem('userEmail');
                 const savedID = localStorage.getItem('userID');
-                
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('displayEmail').innerText = savedEmail;
@@ -329,16 +322,15 @@
 
         function handleRegistration() {
             const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+            const confirm = document.getElementById('regConfirm').value;
             if(!email.includes('@')) return alert("সঠিক ইমেইল দিন!");
-            
+            if(pass === "" || pass !== confirm) return alert("পাসওয়ার্ড সঠিক নয়!");
             const randomID = Math.floor(100000 + Math.random() * 900000);
-            
             showLoader(2000, () => {
-                // Save to Local Storage
                 localStorage.setItem('isRegistered', 'true');
                 localStorage.setItem('userEmail', email);
                 localStorage.setItem('userID', randomID);
-
                 document.getElementById('signup-page').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('displayEmail').innerText = email;
@@ -350,10 +342,8 @@
 
         function verifyTrx() {
             if(document.getElementById('trxInput').value === "") return alert("TrxID দিন");
-            
             failedAttempts++;
             localStorage.setItem('failCount', failedAttempts);
-
             if(failedAttempts >= 4) {
                 localStorage.setItem('userBlocked', 'true');
                 document.getElementById('payment-screen').style.display = 'none';
